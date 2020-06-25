@@ -38,7 +38,8 @@
 }
 
 .leaflet-container {
-  width: 90%;
+  margin: auto;
+  width: 50%; 
   height: 400px;
   overflow: hidden;
 }

@@ -1,8 +1,12 @@
 import React,{useState} from 'react';
+import Cookies from 'js-cookie';
+import {Redirect} from 'react-router-dom';
 
 const Login = () =>{
     const [email, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  
+  const [authenticated,setAuthenticated] = useState(false)
 
   const loginSubmit = e => {
     e.preventDefault();
@@ -20,18 +24,30 @@ const Login = () =>{
     };
     
     fetch("http://localhost:3000/users/login", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    .then(response => {
+      if(response.status === 200){
+        response.json().then((response) => Cookies.set('token',response))
+        .then(setAuthenticated(true));
+      }
+      if(response.status === 400){
+        alert('Invalid password')
+      }
+    })
+        .catch((error) => {
+          console.error("Error:", error);
+        })
+  
 
   };
 
 
 
   return (
+    <>
+     {authenticated && <Redirect to="/record-your-experience" />}
     <form onSubmit={loginSubmit}>
       <label>
-        Username:
+        Email:
         <input
           value={email}
           onChange={event => setUsername(event.target.value)}
@@ -52,6 +68,7 @@ const Login = () =>{
       <br />
       <button>Submit</button>
     </form>
+    </>
   );
 }
 

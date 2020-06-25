@@ -1,33 +1,39 @@
 import React, {useState,useEffect} from 'react'
 import { Map, Marker, TileLayer,Popup } from "react-leaflet";
-
+import getBoundingBox from '../utils/getBoundingBox'
 import '../App.css'
 
-const Postpage = () =>{
+const Postpage = ({handleSubmit}) =>{
 
-    const [lat, setLat] = useState(0);
-    const [lng, setLon] = useState(0);
+    // const [lat, setLat] = useState(0);
+    // const [lng, setLon] = useState(0);
   
-    useEffect(() => {
-      navigator.geolocation.getCurrentPosition(geo => {
-        setLat(geo.coords.latitude);
-        setLon(geo.coords.longitude);
-      });
-    });
-    const position = [lat,lng]
+    // useEffect(() => {
+    //   navigator.geolocation.getCurrentPosition(geo => {
+    //     setLat(geo.coords.latitude);
+    //     setLon(geo.coords.longitude);
+    //     console.log(getBoundingBox([lat,lng],1))
+    //   });
+    // });
+    // const position = [lat,lng]
     return(
         <>
-        <div className="leaflet-container">
-      <Map center={position} zoom={15}>
-            <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-          />
-          <Marker position={position}>
-          <Popup>You are here</Popup>
-          </Marker>
-        </Map>
+     <div >
+        <label for="avatar">Choose a profile picture:</label>
+
+<input type="file"
+       id="avatar" name="avatar"
+       accept="image/png, image/jpeg"/>
         </div>
+
+        <form >
+<label >Write your experience</label>
+<textarea id="experience-textfield" name="experience-textfield" rows="9" cols="50">
+  
+  </textarea>
+  <br/><br/>
+</form>
+<button onClick={handleSubmit}>Submit</button>
         </>
     )
 }
