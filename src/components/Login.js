@@ -3,14 +3,13 @@ import Cookies from 'js-cookie';
 import {Redirect} from 'react-router-dom';
 
 const Login = () =>{
-    const [email, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   
   const [authenticated,setAuthenticated] = useState(false)
 
   const loginSubmit = e => {
     e.preventDefault();
-
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     
@@ -37,27 +36,28 @@ const Login = () =>{
           console.error("Error:", error);
         })
   
-
+        if(email.length < 1 || password.length < 1){
+    alert("Please fill all fields");}
   };
-
-
 
   return (
     <>
      {authenticated && <Redirect to="/record-your-experience" />}
+     <div className="login">
     <form onSubmit={loginSubmit}>
       <label>
-        Email:
+        Email
         <input
           value={email}
-          onChange={event => setUsername(event.target.value)}
+          onChange={event => setEmail(event.target.value)}
           name="email"
           type="text"
         />
       </label>
       <br />
+      <br/>
       <label>
-        Password:
+        Password
         <input
           value={password}
           onChange={event => setPassword(event.target.value)}
@@ -65,9 +65,10 @@ const Login = () =>{
           type="password"
         />
       </label>
-      <br />
-      <button>Submit</button>
+      <div className="btnlogin"><button>Submit</button></div>
+      
     </form>
+    </div>
     </>
   );
 }

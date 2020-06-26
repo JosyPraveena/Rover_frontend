@@ -1,83 +1,80 @@
 import React,{useState} from "react"
-import {Link} from "react-router-dom"
+import {Switch,Route,Link} from "react-router-dom"
 import Cookies from 'js-cookie';
 import {Redirect} from 'react-router-dom';
+import Signup from '../components/Signup'
+import Login from '../components/Login'
+import Button from '@material-ui/core/Button';
 
-const Topbar = () =>{
+
+const Topbar = ({login,signup,handleClick}) =>{
 
     const [email, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     
     const [authenticated,setAuthenticated] = useState(false)
   
-    const loginSubmit = e => {
-      e.preventDefault();
+    // const loginSubmit = e => {
+    //   e.preventDefault();
   
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+    //   const myHeaders = new Headers();
+    //   myHeaders.append("Content-Type", "application/json");
       
-      const raw = JSON.stringify({"email": `${email}`,"password": `${password}`});
+    //   const raw = JSON.stringify({"email": `${email}`,"password": `${password}`});
       
-      const requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-      };
+    //   const requestOptions = {
+    //     method: 'POST',
+    //     headers: myHeaders,
+    //     body: raw,
+    //     redirect: 'follow'
+    //   };
       
-      fetch("http://localhost:3000/users/login", requestOptions)
-      .then(response => {
-        if(response.status === 200){
-          response.json().then((response) => Cookies.set('token',response))
-          .then(setAuthenticated(true));
-        }
-        if(response.status === 400){
-          alert('Invalid password')
-        }
-      })
-          .catch((error) => {
-            console.error("Error:", error);
-          })
+    //   fetch("http://localhost:3000/users/login", requestOptions)
+    //   .then(response => {
+    //     if(response.status === 200){
+    //       response.json().then((response) => Cookies.set('token',response))
+    //       .then(setAuthenticated(true));
+    //     }
+    //     if(response.status === 400){
+    //       alert('Invalid password')
+    //     }
+    //   })
+    //       .catch((error) => {
+    //         console.error("Error:", error);
+    //       })
     
   
-    };
+    // };
   
+    const buttonStyle = {
+      fontFamily : 'Pangolin',
+    
+    }
   
     return(
         <>
-        <div>
+        <div className="home">
+          <div id="login"><Button style={buttonStyle} onClick={handleClick} variant="contained" color="primary" component={Link} to={'/login'}>Login </Button></div>
+        
+        <div >
+        <Button style={buttonStyle} onClick={handleClick} variant="contained" color="primary" className="link" component={Link} to={'/sign-up'}>Sign up </Button>
+        </div>
+       
+        </div>
+        <div className="topbar-homepage">
+        <div className="title">
         <h1>Rover</h1>
-        <br/>
         <h4>Hoard your travel memories</h4>
-        <Link to='/sign-up'>Sign up</Link>
         </div>
-        <div>Become a ravor to record your experience</div>
-        <div> <br/><br/>
+        
+        </div>    
+        {login ? <Login/> : null}  
+        {signup ? <Signup/>: null} 
         {authenticated && <Redirect to="/record-your-experience" />}
-    <form onSubmit={loginSubmit}>
-      <label>
-        Email:
-        <input
-          value={email}
-          onChange={event => setUsername(event.target.value)}
-          name="email"
-          type="text"
-        />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          value={password}
-          onChange={event => setPassword(event.target.value)}
-          name="password"
-          type="password"
-        />
-      </label>
-      <br />
-      <button>Submit</button>
-    </form>
-        </div>
+        {/* <Switch>
+    <Route path={"/login"} render={(props) => ( <Login {...props}/>)}/>
+    <Route path={"/sign-up"} render={(props) => ( <Signup {...props}/>)}/>
+    </Switch> */}
         </>
     )
 }

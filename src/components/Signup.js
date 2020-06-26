@@ -4,8 +4,8 @@ import {Redirect} from 'react-router-dom'
 
 const Signup = () =>{
     const [username,setUsername] = useState(null)
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [authenticated,setAuthenticated] = useState(false)
     const loginSubmit = e => {
         e.preventDefault();
@@ -28,26 +28,29 @@ fetch("http://localhost:3000/users/signup", requestOptions)
       response.json().then((response) => Cookies.set('token',response))
       .then(setAuthenticated(true));
     }
+    if(response.status === 204){
+      alert('Please fill all fields')
+    }
     if(response.status === 400){
       alert('This id already exists')
     }
+
   })
       .catch((error) => {
         console.error("Error:", error);
       })
-
-  setUsername("")
-        setEmail("")
-        setPassword('')
-      }
-
-
+      // if(username.length<1 || email.length<1 || password.legth<1){
+      // alert('Please fill all fields')
+      // }
+    
+    }
     return(
         <>
         {authenticated && <Redirect to="/record-your-experience" />}
+        <div className="signup">
         <form onSubmit={loginSubmit}>
         <label>
-        Username:
+        Username
         <input
           value={username}
           onChange={event => setUsername(event.target.value)}
@@ -57,7 +60,7 @@ fetch("http://localhost:3000/users/signup", requestOptions)
       </label>
       <br />
       <label>
-        Email:
+        Email
         <input
           value={email}
           onChange={event => setEmail(event.target.value)}
@@ -67,7 +70,7 @@ fetch("http://localhost:3000/users/signup", requestOptions)
       </label>
       <br />
       <label>
-        Password:
+        Password
         <input
           value={password}
           onChange={event => setPassword(event.target.value)}
@@ -76,8 +79,12 @@ fetch("http://localhost:3000/users/signup", requestOptions)
         />
       </label>
       <br />
-      <button>Signup</button>
-    </form>
+      <br/>
+      <div className="btns">
+      <button>Submit</button> 
+      </div>
+        </form>
+      </div>
         </>
     )
 }

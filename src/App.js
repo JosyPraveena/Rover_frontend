@@ -12,22 +12,27 @@ import OverviewPage from './components/OverviewPage';
 function App() {
 
   const[record,setRecord] = useState(false)
-
+ 
   const handleClick = () =>{
     setRecord(true)
+ 
+
   }
 
   const handleSubmit =() =>{
       setRecord(false)
   }
+
   return(
     <>
-   
+
     <Switch>
+    <Route path={"/login"} render={(props) => ( <Login {...props}/>)}/>
+    <Route path={"/sign-up"} render={(props) => ( <Signup {...props}/>)}/>
     {/* <Route path={'/post'} render={(props) => (<Postpage {...props} />)}/> */}
     <Route path={'/record-your-experience'} render={(props) => (<OverviewPage {...props} handleClick={handleClick} record={record} handleSubmit={handleSubmit}/>)}/>
-    <Route path={"/"} render={(props) => ( <Home {...props}/>)}/>
-    <Route path={"/sign-up"} render={(props) => ( <Signup {...props}/>)}/>
+    <Route path={"/"} render={(props) => ( <Home {...props} />)}/>
+   
     </Switch>
     </>
   )
