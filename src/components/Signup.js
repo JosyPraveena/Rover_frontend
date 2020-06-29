@@ -22,7 +22,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://localhost:3000/users/signup", requestOptions)
+fetch("http://localhost:3000/user/signup", requestOptions)
   .then(response => {
     if(response.status === 200){
       response.json().then((response) => Cookies.set('token',response))

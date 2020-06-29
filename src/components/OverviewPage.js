@@ -1,20 +1,25 @@
 import React, {useState,useEffect} from 'react'
 import { Map, Marker, TileLayer,Popup } from "react-leaflet";
-import Postpage from '../components/Postpage'
+import Uploadpage from './Uploadpage'
 import '../App.css'
 // import { set } from 'js-cookie';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt,faBinoculars } from "@fortawesome/free-solid-svg-icons";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import { FcBinoculars,FcStackOfPhotos } from 'react-icons/fc';
+import {GiBinoculars,GiWhiteBook,GiBookCover,GiSecretBook} from'react-icons/gi'
+import {MdPhotoAlbum} from 'react-icons/md'
+
+import Navbar from '../components/Navbar'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       height: 1000,
-      width: 1000
+      width: 900
     }
   })
 );
@@ -33,9 +38,7 @@ const OverviewPage = ({record,handleClick,handleSubmit}) =>{
         "country": "Germany",
         "country_code": "de"
     });
-    // const [restaurants,setRestaurants] = useState(null)
-    // const [parks,setParks] = useState(null)
-    
+
     useEffect(() => {
       navigator.geolocation.getCurrentPosition(geo => {
         setLat(geo.coords.latitude);
@@ -64,7 +67,11 @@ const OverviewPage = ({record,handleClick,handleSubmit}) =>{
     const position = [lat,lng]
     return(
         <>
+        <Navbar/>
         <div className="overview-page">
+        <Link to="/profile">
+<GiSecretBook id="photos-icon"size={80} color="white"/>
+</Link>
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={12}>
             <Grid container justify="center">
@@ -88,13 +95,28 @@ const OverviewPage = ({record,handleClick,handleSubmit}) =>{
             
         <FontAwesomeIcon  onClick={handleClick} icon={faMapMarkerAlt} size='4x' style={{color:"#FF0000"}}/>
         </div> :null}
-        {record===true ? <Postpage handleSubmit={handleSubmit} road={road}/> :null}
+        {record===true ? <Uploadpage handleSubmit={handleSubmit} road={road}/> :null}
         </Paper>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
+        {/* <FontAwesomeIcon id="binocular" icon={GiBinoculars} size='3x' style={{color: "	#FFFFFF"}}/> */}
+        <div className="icons">
+        <Link to = '/feeds'>
+
+<GiBinoculars size={80} id="binocular" color='white'/>
+</Link>
+
+
+
+        </div>
         
+        
+        {/* <Link to = '/feeds'>
+        <FcBinoculars id="binocular" size={80}/>    
+        </Link> */}
+       
         </div>
         
         

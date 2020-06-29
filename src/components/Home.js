@@ -53,8 +53,10 @@ const Topbar = ({login,signup,handleClick}) =>{
   
     return(
         <>
+        
+        <div className="Homepage">
         <div className="home">
-          <div id="login"><Button style={buttonStyle} onClick={handleClick} variant="contained" color="primary" component={Link} to={'/login'}>Login </Button></div>
+          <div id="login-button"><Button style={buttonStyle} onClick={handleClick} variant="contained" color="primary" component={Link} to={'/login'}>Login </Button></div>
         
         <div >
         <Button style={buttonStyle} onClick={handleClick} variant="contained" color="primary" className="link" component={Link} to={'/sign-up'}>Sign up </Button>
@@ -75,6 +77,9 @@ const Topbar = ({login,signup,handleClick}) =>{
     <Route path={"/login"} render={(props) => ( <Login {...props}/>)}/>
     <Route path={"/sign-up"} render={(props) => ( <Signup {...props}/>)}/>
     </Switch> */}
+
+        </div>
+     
         </>
     )
 }

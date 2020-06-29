@@ -5,14 +5,14 @@
   background-repeat: no-repeat;
 }
 
-html{
+/* html{
   background-image: url('./images/Rover.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 .leaflet-container {
   margin: auto;
-  width: 1000px; 
+  width: 900px; 
   height: 280px;
   overflow: hidden;
   border-radius: 1px solid black;
@@ -22,13 +22,28 @@ html{
   display: flex;
   justify-content: center;
 }
+.Homepage{
+  background-image: url('https://images.pexels.com/photos/163194/old-retro-antique-vintage-163194.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-position: center center; 
+  /* background-attachment: fixed;  */
+  background-repeat: no-repeat; background-size: cover; 
+  height: 710px;
+    padding-top:5px;
+}
+
+/* @media (max-width: 480px) {
+  .Homepage {
+      background-image: url('./images/Rover.jpg');
+  }
+} */
 .home{
+ 
   display: flex;
   justify-content: flex-end;
   font-family: 'Dancing Script', cursive;
   font-size: 2rem;
   padding-right: 80px;
-  padding-top: 30px;
+  padding-top:5px;
   padding-left: 50px;
   /* height: 10px; */
 }
@@ -38,17 +53,18 @@ html{
   /* margin: 0 auto; */
   /* width: 80%; */
   text-align: center;
+  
 }
 .title h1{
   font-family: 'Dancing Script', cursive;
-  font-size: 5rem;
-  color: #0A4BC7;
+  font-size: 6rem;
+  color: black;
 }
 
 .title h4{
   font-family: 'Dancing Script', cursive;
-  font-size: 50px;
-  color: black;
+  font-size: 3.5rem;
+  color:  black;
   padding: 0;
 }
 
@@ -57,7 +73,7 @@ input[type=text] {
   height: 30px;
   width: 300px;
   display: inline-block;
-  border: 1px solid blue;
+  border: 1px solid black;
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -66,12 +82,12 @@ input[type=password] {
   height: 30px;
   width: 300px;
   display: inline-block;
-  border: 1px solid blue;
+  border: 1px solid black;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
-#login{
+#login-button{
   padding-right: 20px;
 }
 
@@ -82,7 +98,7 @@ input[type=password] {
 }
 
 .login button {
-  background-color: #0A4BC7;
+  background-color: black;
   color: white;
   padding: 9px 18px;
   margin: 18px 0;
@@ -97,7 +113,7 @@ input[type=password] {
 label {
   font-family: 'Dancing Script', cursive;
   font-size: 1.5rem;
-  color: #0A4BC7;
+  color: black;
   font-weight: 600
 }
 
@@ -131,6 +147,23 @@ label {
 }
 .overview-page{
  padding-top: 30px;
+ background-image: url("https://images.pexels.com/photos/697662/pexels-photo-697662.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+ background-position: center center;  
+ background-attachment: fixed;  
+  background-repeat: no-repeat; background-size: cover; 
+ /* background-color: rgb(116, 12, 12); */
+ display: flex;
+ flex-direction: row;
+ margin: auto;
+ height: 1050px;
+}
+
+#binocular{
+  padding-right: 80px;
+}
+
+#photos-icon{
+  padding-left: 80px;
 }
 
 #marker{
@@ -171,4 +204,21 @@ justify-self: end;
   border: 0px;
   background: transparent;
   text-decoration: underline;
+}
+
+.Navbar{
+  height: 50px;
+  background-color: #008B8B;
+}
+
+.feed-page{
+  background-image: url("https://images.pexels.com/photos/3088778/pexels-photo-3088778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-position: center center;  
+  background-attachment: fixed; 
+   background-repeat: no-repeat; background-size: cover; 
+}
+
+.icons {
+  display: flex;
+  flex-direction: column;
 }

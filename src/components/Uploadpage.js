@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Postpage = ({handleSubmit,road}) =>{
+const Uploadpage = ({handleSubmit,road}) =>{
 
   const [state, setState] = useState({
     checkedB: false
@@ -195,7 +195,7 @@ const Postpage = ({handleSubmit,road}) =>{
           onChange={handlePlacelist}
         >
           <MenuItem value={`${road.road}, ${road.suburb}`}>
-    <em>{`${road.road}, ${road.suburb}`}</em>
+    <em>{`${road.road}, ${road.suburb} - (current location)`}</em>
           </MenuItem>
           <MenuItem> or </MenuItem>
           {array3.map(each => {
@@ -219,7 +219,9 @@ const Postpage = ({handleSubmit,road}) =>{
         {/* <form method="POST" action="http://localhost:3000/upload/cat-pics" enctype="multipart/form-data"> */}
      <div className="post-section" >
 <FontAwesomeIcon icon={faCameraRetro} size='2x' style={{color:"grey"}} /> 
-<input type="file" multiple
+<input type="file" method="POST" 
+// action={`http://localhost:3000/post/${_id}`} 
+multiple
        id="avatar" name="avatar" 
        accept="image/png, image/jpeg"/>
        
@@ -239,4 +241,4 @@ const Postpage = ({handleSubmit,road}) =>{
     )
 }
 
-export default Postpage
+export default Uploadpage

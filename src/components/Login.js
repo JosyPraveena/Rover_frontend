@@ -1,8 +1,11 @@
 import React,{useState} from 'react';
 import Cookies from 'js-cookie';
 import {Redirect} from 'react-router-dom';
+import Navbar from '../components/Navbar'
+
 
 const Login = () =>{
+  
     const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
@@ -22,7 +25,7 @@ const Login = () =>{
       redirect: 'follow'
     };
     
-    fetch("http://localhost:3000/users/login", requestOptions)
+    fetch("http://localhost:3000/user/login", requestOptions)
     .then(response => {
       if(response.status === 200){
         response.json().then((response) => Cookies.set('token',response))
@@ -43,7 +46,9 @@ const Login = () =>{
   return (
     <>
      {authenticated && <Redirect to="/record-your-experience" />}
+     <Navbar/>
      <div className="login">
+      
     <form onSubmit={loginSubmit}>
       <label>
         Email
