@@ -18,13 +18,24 @@ import Navbar from '../components/Navbar'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      height: 1000,
-      width: 900
+      height: 900,
+      width: 900,
+      [theme.breakpoints.down('sm')]: {
+        height: 700,
+        width: 600
+      },
+      [theme.breakpoints.down('md')]: {
+        height: 800,
+      width: 700
+      }
+    },
+    root:{
+        borderRadius: 25
     }
   })
 );
 
-const OverviewPage = ({record,handleClick,handleSubmit}) =>{ 
+const OverviewPage = () =>{ 
     const classes = useStyles();
     const [lat, setLat] = useState(0);
     const [lng, setLon] = useState(0);
@@ -48,6 +59,16 @@ const OverviewPage = ({record,handleClick,handleSubmit}) =>{
     },[lat,lng]);
 
     
+  const[record,setRecord] = useState(false)
+ 
+  const handleClick = () =>{
+    setRecord(true)
+ 
+
+  }
+ 
+
+    
 //   useEffect(() => {
 //     async function fetchData() {
 
@@ -69,15 +90,10 @@ const OverviewPage = ({record,handleClick,handleSubmit}) =>{
         <>
         <Navbar/>
         <div className="overview-page">
-        <Link to="/profile">
-<GiSecretBook id="photos-icon"size={80} color="white"/>
-</Link>
-        <Grid container className={classes.root} spacing={2}>
-          <Grid item xs={12}>
-            <Grid container justify="center">
-              <Grid item>
-                <Paper className={classes.paper}>
-        <div className="leaflet-container">
+        {/* <Link to="/profile">
+<GiSecretBook id="photos-icon"size={80} color="white" />
+</Link> */}
+<div className="leaflet-container">
         <Map center={position} zoom={14}>
         <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -87,22 +103,50 @@ const OverviewPage = ({record,handleClick,handleSubmit}) =>{
       <Popup>{road.road}</Popup>
       </Marker>
     </Map>
-     
         </div>
+        <div className="overview-record">
+        { record===false ? <div id="text-overview"><h3>Wanna record your experience?</h3></div> :null}
+        {record===false ?
+        <div id="marker">
+            
+        <FontAwesomeIcon  onClick={handleClick} icon={faMapMarkerAlt} size='4x' style={{color:"#FF0000"}}/>
+        </div> :null}
+
+
+        {record===true ?         <Grid container className={classes.root} spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify="center">
+              <Grid item>
+                <Paper className={classes.paper}><Uploadpage road={road}/> </Paper>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>:null}
+        
+        
+
+        </div>
+        
+        {/* <Grid container className={classes.root} spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify="center">
+              <Grid item>
+                <Paper className={classes.paper}>
+        
        { record===false ? <div id="text-overview"><h3>Wanna record your experience?</h3></div> :null}
         {record===false ?
         <div id="marker">
             
         <FontAwesomeIcon  onClick={handleClick} icon={faMapMarkerAlt} size='4x' style={{color:"#FF0000"}}/>
         </div> :null}
-        {record===true ? <Uploadpage handleSubmit={handleSubmit} road={road}/> :null}
+        {record===true ? <Uploadpage road={road}/> :null}
         </Paper>
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
         {/* <FontAwesomeIcon id="binocular" icon={GiBinoculars} size='3x' style={{color: "	#FFFFFF"}}/> */}
-        <div className="icons">
+        {/* <div className="icons">
         <Link to = '/feeds'>
 
 <GiBinoculars size={80} id="binocular" color='white'/>
@@ -110,7 +154,7 @@ const OverviewPage = ({record,handleClick,handleSubmit}) =>{
 
 
 
-        </div>
+        </div> */}
         
         
         {/* <Link to = '/feeds'>

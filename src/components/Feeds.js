@@ -34,20 +34,22 @@ export default function Feeds() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    async function fetchPost() {
     fetch("http://localhost:3000/post/allposts")
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setData(data);
-      });
+      }) } fetchPost()
   }, []);
+
 
   return (
       <div className="feed-page">
            <div className={classes.root}>
-      {data &&
-        data.map(each => (
-          <Paper className={classes.paper} key={each._id}>
+      {data ?
+        data.map(each => {
+            return each.view === true ?
+          <Paper className={classes.paper} key={each._id} >
             <Grid container spacing={2}>
               <Grid item>
                 <ButtonBase className={classes.image}>
@@ -67,20 +69,21 @@ export default function Feeds() {
                     <Typography variant="body2" gutterBottom>
                       {each.post_description}
                     </Typography>
+                    
                   </Grid>
                   <Grid item>
-                    <Typography variant="body2" style={{ cursor: "pointer" }}>
-                      Remove
-                    </Typography>
-                  </Grid>
+                      <Typography variant="body2" style={{ cursor: "pointer" }}>
+                        - {each.username}
+                      </Typography>
+                    </Grid>
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1">21/06/2020</Typography>
                 </Grid>
               </Grid>
             </Grid>
-          </Paper>
-        ))}
+          </Paper> : null}
+        ) : <div>Loading</div>}
     </div>
 
       </div>

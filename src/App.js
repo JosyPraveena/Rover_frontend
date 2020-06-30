@@ -14,17 +14,7 @@ import UserAlbum from './components/UserAlbum'
 
 function App() {
 
-  const[record,setRecord] = useState(false)
- 
-  const handleClick = () =>{
-    setRecord(true)
- 
 
-  }
-
-  const handleSubmit =() =>{
-      setRecord(false)
-  }
 
   return(
     <>
@@ -34,7 +24,7 @@ function App() {
     <Route path={"/login"} render={(props) => ( <Login {...props}/>)}/>
     <Route path={"/sign-up"} render={(props) => ( <Signup {...props}/>)}/>
     <Route path={'/feeds'} render={(props) => (<Feeds {...props} />)}/>
-    <Route path={'/record-your-experience'} render={(props) => (<OverviewPage {...props} handleClick={handleClick} record={record} handleSubmit={handleSubmit}/>)}/>
+    <Route path={'/record-your-experience'} render={(props) => (<OverviewPage {...props}  />)}/>
     <Route path={"/"} render={(props) => ( <Home {...props} />)}/>
    
     </Switch>

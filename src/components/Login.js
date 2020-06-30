@@ -10,6 +10,7 @@ const Login = () =>{
   const [password, setPassword] = useState("");
   
   const [authenticated,setAuthenticated] = useState(false)
+  const [toeknBackend,setTokenBackend] = useState("")
 
   const loginSubmit = e => {
     e.preventDefault();
@@ -28,8 +29,8 @@ const Login = () =>{
     fetch("http://localhost:3000/user/login", requestOptions)
     .then(response => {
       if(response.status === 200){
-        response.json().then((response) => Cookies.set('token',response))
-        .then(setAuthenticated(true));
+        Cookies.set('token', response.headers.get('x-authorization-token'))
+        setAuthenticated(true);
       }
       if(response.status === 400){
         alert('Invalid password')
@@ -46,6 +47,8 @@ const Login = () =>{
   return (
     <>
      {authenticated && <Redirect to="/record-your-experience" />}
+     <div className="login-page">
+
      <Navbar/>
      <div className="login">
       
@@ -74,6 +77,8 @@ const Login = () =>{
       
     </form>
     </div>
+     </div>
+    
     </>
   );
 }

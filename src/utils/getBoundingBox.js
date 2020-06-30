@@ -85,5 +85,3 @@ const getBoundingBox = function(centerPoint, distance) {
   
   export default getBoundingBox;
   
-//   console.log(getBoundingBox([lat, lng], 1));
-  

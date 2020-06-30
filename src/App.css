@@ -11,11 +11,17 @@
   background-repeat: no-repeat;
 } */
 .leaflet-container {
-  margin: auto;
   width: 900px; 
   height: 280px;
   overflow: hidden;
-  border-radius: 1px solid black;
+  margin: 10;
+}
+
+.overview-record{
+  width: 900px; 
+  height: 280px;
+  color: black;
+  text-overflow: ;
 }
 
 .topbar-homepage{
@@ -23,9 +29,10 @@
   justify-content: center;
 }
 .Homepage{
-  background-image: url('https://images.pexels.com/photos/163194/old-retro-antique-vintage-163194.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  /* background-image: url('https://images.pexels.com/photos/163194/old-retro-antique-vintage-163194.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); */
+  background-image: url('https://images.pexels.com/photos/3088778/pexels-photo-3088778.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
   background-position: center center; 
-  /* background-attachment: fixed;  */
+  background-attachment: fixed; 
   background-repeat: no-repeat; background-size: cover; 
   height: 710px;
     padding-top:5px;
@@ -56,16 +63,16 @@
   
 }
 .title h1{
+  padding-top: 60px;
   font-family: 'Dancing Script', cursive;
   font-size: 6rem;
-  color: black;
+  color: rgb(153, 235, 255);
 }
 
 .title h4{
   font-family: 'Dancing Script', cursive;
   font-size: 3.5rem;
-  color:  black;
-  padding: 0;
+  color:rgb(255, 194, 102);
 }
 
 
@@ -73,7 +80,7 @@ input[type=text] {
   height: 30px;
   width: 300px;
   display: inline-block;
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -82,7 +89,7 @@ input[type=password] {
   height: 30px;
   width: 300px;
   display: inline-block;
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -95,6 +102,15 @@ input[type=password] {
   margin: auto;
   width: 20%;
   padding-top: 80px;
+  
+}
+
+.login-page{
+  background-image: url('https://images.pexels.com/photos/163194/old-retro-antique-vintage-163194.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-position: center center; 
+  background-attachment: fixed; 
+  background-repeat: no-repeat; background-size: cover; 
+  height: 750px;
 }
 
 .login button {
@@ -112,7 +128,7 @@ input[type=password] {
 
 label {
   font-family: 'Dancing Script', cursive;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   color: black;
   font-weight: 600
 }
@@ -124,8 +140,8 @@ label {
 }
 
 .signup button {
- 
-  background-color: #0A4BC7;
+ background-image: linear-gradient(rgb(153, 235, 255),rgb(255, 194, 102));
+  /* background-color: #0A4BC7; */
   color: white;
   padding: 9px 18px;
   margin: 18px 0;
@@ -147,23 +163,36 @@ label {
 }
 .overview-page{
  padding-top: 30px;
- background-image: url("https://images.pexels.com/photos/697662/pexels-photo-697662.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+ background-image: url("https://images.pexels.com/photos/1078850/pexels-photo-1078850.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
  background-position: center center;  
  background-attachment: fixed;  
   background-repeat: no-repeat; background-size: cover; 
  /* background-color: rgb(116, 12, 12); */
  display: flex;
- flex-direction: row;
+ flex-direction: column;
  margin: auto;
  height: 1050px;
+ text-align: center;
+ padding-left: 300px;
 }
 
 #binocular{
   padding-right: 80px;
+  stroke: black;
+  stroke-width: 5;
+}
+textarea{
+  -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	width: 100%;
 }
 
 #photos-icon{
   padding-left: 80px;
+  stroke: black;
+  stroke-width: 5;
 }
 
 #marker{
@@ -174,7 +203,7 @@ label {
 
 #text-overview{
   text-align: center;
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Oldenburg', cursive;
   font-size: 1.5rem;
 }
 
@@ -183,8 +212,13 @@ label {
   width: 20%;
   display: flex;
   flex-direction: column;
+  padding-top: 30px;
 }
-
+.upload-section{
+  font-family: 'Roboto';
+  margin: auto;
+  width: 20%;
+}
 .post-section{
   margin: auto;
   width: 20%;
@@ -207,7 +241,7 @@ justify-self: end;
 }
 
 .Navbar{
-  height: 50px;
+  height: 20px;
   background-color: #008B8B;
 }
 
@@ -221,4 +255,12 @@ justify-self: end;
 .icons {
   display: flex;
   flex-direction: column;
+}
+
+@media(min-width:1280){
+  .leaflet-container{
+    width: 650px;
+  height: 300px;
+  overflow: hidden;
+  }
 }

@@ -10,6 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin, faCameraRetro } from '@fortawesome/free-solid-svg-icons';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import Cookies from 'js-cookie';
+import { Redirect } from 'react-router-dom';
+import { capitalize, Typography } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,11 +20,19 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       display: "block",
       marginTop: theme.spacing(2),
-      paddingLeft: 45
+      paddingLeft: 20,
+      width: 250,
+      fontFamily: 'Roboto',
+      fontSize: 28,
+      textTransform: "capitalize"
     },
     formControl: {
       margin: theme.spacing(1),
       minWidth: 250
+    },
+    places:{
+      fontFamily: 'Roboto',
+      fontSize: 20,
     }
   })
 );
@@ -31,9 +42,15 @@ const Uploadpage = ({handleSubmit,road}) =>{
   const [state, setState] = useState({
     checkedB: false
   });
+
+  const [posted,setPosted] = useState(false)
+
+  const [postDescription,setPostDescription] = useState("")
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
+
+
 
   let array1 = [
     {
@@ -154,6 +171,7 @@ const Uploadpage = ({handleSubmit,road}) =>{
   const classes = useStyles();
   const [place, setPlace] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [selectedFiles,setSelectedFiles] = useState([])
 
   const handlePlacelist = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPlace(event.target.value);
@@ -167,23 +185,47 @@ const Uploadpage = ({handleSubmit,road}) =>{
     setOpen(true);
   };
 
+  const handleSubmitPost = (e) =>{
+    e.preventDefault();
+    var myHeaders = new Headers();
+myHeaders.append("authorization", "Bearer " + Cookies.get('token'));
+var formdata = new FormData();
+for(const file of selectedFiles){
+formdata.append("photos", file)}
+formdata.append("post_title", place);
+formdata.append("post_description", postDescription);
+formdata.append("city", road.suburb);
+formdata.append("place", place);
+formdata.append("view", state.checkedB);
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:3000/post/create", requestOptions)
+  .then(response => response.text())
+  .then(result =>(result))
+  .catch(error => console.log('error', error));
+
+  setPosted(true)
+  }
+
+const fileSelectedHandler = (e) =>{
+  // console.log(selectedFiles)
+  setSelectedFiles(e.target.files)
+ 
+} 
+// for(const file of selectedFiles){
+//   console.log("photos", file)}
     return(
         <>
-        <div className="switch"> 
-        <FormControlLabel
-      control={
-        <Switch
-          checked={state.checkedB}
-          onChange={handleChange}
-          name="checkedB"
-          color="primary"
-        />
-      }
-      label="Public"
-    />
+        <div >
         <div className="location-section">
-      <Button className={classes.button}>Select location</Button>
-      <FormControl className={classes.formControl}>
+        {/* <Button className={classes.button}>Pick location</Button> */}
+        <FormControl className={classes.formControl}>
         <InputLabel id="demo-controlled-open-select-label">Place</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
@@ -195,49 +237,58 @@ const Uploadpage = ({handleSubmit,road}) =>{
           onChange={handlePlacelist}
         >
           <MenuItem value={`${road.road}, ${road.suburb}`}>
-    <em>{`${road.road}, ${road.suburb} - (current location)`}</em>
+          <em>{`${road.road}, ${road.suburb} - (current location)`}</em>
           </MenuItem>
           <MenuItem> or </MenuItem>
           {array3.map(each => {
             return (
-              <MenuItem value={each.name} key={each.distance}>
-                {each.name}
+              <MenuItem value={each.name} key={each.distance} className={classes.places}>
+              {each.name}
               </MenuItem>
-            );
+              );
           })}
-        </Select>
-      </FormControl>
-
-   
-    </div>
-
+          </Select>
+          </FormControl>
+      </div>
+      {selectedFiles.length ? <div className="switch"> 
+        <FormControlLabel
+        control={
+        <Switch
+        checked={state.checkedB}
+        onChange={handleChange}
+        name="checkedB"
+        color="primary"
+        />
+        }
+        label="Public"
+        />
+        </div> : null
+}
         </div>
-<br/><br/>
-<div>
-  <h3>{`Title: ${place}`}</h3></div>
-
-        {/* <form method="POST" action="http://localhost:3000/upload/cat-pics" enctype="multipart/form-data"> */}
-     <div className="post-section" >
-<FontAwesomeIcon icon={faCameraRetro} size='2x' style={{color:"grey"}} /> 
-<input type="file" method="POST" 
-// action={`http://localhost:3000/post/${_id}`} 
-multiple
-       id="avatar" name="avatar" 
-       accept="image/png, image/jpeg"/>
        
-        </div>
-        {/* </form> */}
-        <form className="post-section1"  >
+      <br/><br/>
+      <div className="upload-section">
+      <Typography>{`Title: ${place}`}</Typography>
 
-<textarea id="experience-textfield" placeholder="What your experience in this place?" name="experience-textfield" rows="9" cols="50">
-  
-  </textarea>
-  <br/><br/>
-</form>
-
-<Button style={buttonStyle} onClick={handleSubmit} variant="contained" color="primary"> Save </Button>
-
-        </>
+      <form>
+      <div className="post-section" >
+        <label for="inputFiles"><FontAwesomeIcon icon={faCameraRetro} size='2x' style={{color:"grey"}} /> </label>
+      
+      <input type="file" onChange={fileSelectedHandler} multiple
+      id="inputFiles" name="photos" hidden
+      accept="image/png, image/jpeg"/>
+      </div>
+      </form>
+      <form className="post-section1"  >
+      <textarea value={postDescription}  onChange={event => setPostDescription(event.target.value)} id="experience-textfield" placeholder="What your experience in this place?" name="experience-textfield" rows="20" cols="50">
+      </textarea>
+      <br/><br/>
+      </form>
+          <button type="submit" onClick={handleSubmitPost}>Save</button>
+      {/* <Button style={buttonStyle}  variant="contained" color="primary"> Save </Button> */}
+      {posted && <Redirect to="/profile" />}
+      </div>
+      </>
     )
 }
 

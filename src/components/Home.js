@@ -48,7 +48,6 @@ const Topbar = ({login,signup,handleClick}) =>{
   
     const buttonStyle = {
       fontFamily : 'Pangolin',
-    
     }
   
     return(

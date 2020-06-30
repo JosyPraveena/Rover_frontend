@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: "none",
       color: 'white'
     },
+    navbar:{
+        background: 'black',
+        height: 65
+    }
   }),
 );
 
@@ -38,7 +42,7 @@ const Navbar =()=>{
     return(
         <>
         <div className={classes.root}>
-      <AppBar position="sticky" color="primary">
+      <AppBar position="sticky"  className={classes.navbar}>
         <Toolbar>
 
           <Typography variant="h6" className={classes.title} component={Link} to='/' >
