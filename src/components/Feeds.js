@@ -35,7 +35,7 @@ export default function Feeds() {
 
   useEffect(() => {
     async function fetchPost() {
-    fetch("http://localhost:3000/post/allposts")
+    fetch("http://localhost:8080/post/allposts")
       .then(res => res.json())
       .then(data => {
         setData(data);
@@ -56,7 +56,7 @@ export default function Feeds() {
                   <img
                     className={classes.img}
                     alt="complex"
-                    src={`http://localhost:3000${each.images[0].path}`}
+                    src={`http://localhost:8080${each.images[0].path}`}
                   />
                 </ButtonBase>
               </Grid>

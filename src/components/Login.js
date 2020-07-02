@@ -4,13 +4,13 @@ import {Redirect} from 'react-router-dom';
 import Navbar from '../components/Navbar'
 
 
+
 const Login = () =>{
   
     const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
   const [authenticated,setAuthenticated] = useState(false)
-  const [toeknBackend,setTokenBackend] = useState("")
 
   const loginSubmit = e => {
     e.preventDefault();
@@ -26,7 +26,7 @@ const Login = () =>{
       redirect: 'follow'
     };
     
-    fetch("http://localhost:3000/user/login", requestOptions)
+    fetch("http://localhost:8080/user/login", requestOptions)
     .then(response => {
       if(response.status === 200){
         Cookies.set('token', response.headers.get('x-authorization-token'))
