@@ -11,8 +11,9 @@ import black from "@material-ui/core/colors/blue";
 import { Grid } from "@material-ui/core";
 // import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import { GiBinoculars} from "react-icons/gi";
-import {AiOutlineUser} from 'react-icons/ai';
-import {RiCalendarEventLine} from 'react-icons/ri'
+import {AiOutlineUser,AiOutlineCalendar} from 'react-icons/ai';
+ import {FaUserAlt,FaBinoculars,FaCalendar} from 'react-icons/fa'
+import { MdAddLocation } from "react-icons/md";
 
 // const theme = createMuiTheme({
 //   palette: {
@@ -54,17 +55,22 @@ const Navbar = () => {
     <>
       <div className="navbar">
         <div id="rover-logo">
+          <Link to="/" style={{ textDecoration: 'none' }}>
           <h3>Rover</h3>
+          </Link>
+          
         </div>
         <div id="navbar-icons">
         <Link to="/profile">
-        <AiOutlineUser size={40} color="white"/>
+        <FaUserAlt  size={35} color="white"/>
         </Link>
         <Link to="/feeds">
-        <GiBinoculars size={40} color="white" />
+        <FaBinoculars size={35} color="white" />
         </Link>
-        
-        <RiCalendarEventLine size={40} color="white"/>
+        <Link to="record-your-experience">
+        <MdAddLocation  size={40} color="white" />
+        </Link>
+        <FaCalendar size={35} color="white"/>
         </div>
       </div>
     </>

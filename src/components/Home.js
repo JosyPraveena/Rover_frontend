@@ -6,16 +6,19 @@ import Signup from "../components/Signup";
 import Login from "../components/Login";
 import Button from "@material-ui/core/Button";
 import Popup from "reactjs-popup";
+import styled from "styled-components"
+import {useEndpoint} from '../Context/EndpointContext'
 
 const Topbar = ({ login, signup, handleClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
-
+  const roverEndpoint = useEndpoint()
   const buttonStyle = {
-    fontFamily: "Pangolin",
+    fontFamily: "Roboto",
     backgroundColor: "#FF4500",
-    fontColor: "white"
+    color: "white",
+    fontSize: "1rem"
   };
 
   const loginSubmit = (e) => {
@@ -32,7 +35,7 @@ const Topbar = ({ login, signup, handleClick }) => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:8080/user/login", requestOptions)
+    fetch(  `${roverEndpoint}/user/login`, requestOptions)
       .then((response) => {
         if (response.status === 200) {
           Cookies.set("token", response.headers.get("x-authorization-token"));
@@ -57,7 +60,7 @@ const Topbar = ({ login, signup, handleClick }) => {
         <div id="homepage-navbar">
           <h1>Rover</h1>
           {/* <Link to="/login" style={{ textDecoration: 'none' }}><h6>Login</h6></Link> */}
-          <Popup trigger={<h6>Login</h6>} modal closeOnDocumentClick>
+          <Popup trigger={<h6>Login</h6>} modal closeOnDocumentClick contentStyle={{width: "400px" , borderRadius : "25px",backgroundColor:"#ffe6dd"}}>
             <div className="login-container">
               <div className="login-div">
                 <h6>login</h6>
@@ -107,9 +110,9 @@ const Topbar = ({ login, signup, handleClick }) => {
         </div>
 
         <div className="intro-section">
-          <h2>One stop destination</h2>
+          <h2>A travelogue for every kind of modern day adventurer</h2>
           <br />
-          <h2>to hoard your travel memories</h2>
+          <h5>Capture, share, plan and celebrate the joy of travelling</h5>
           <br />
           <Button
             style={buttonStyle}

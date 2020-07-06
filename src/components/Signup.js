@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import Cookies from 'js-cookie'
 import {Redirect} from 'react-router-dom'
-
+import {useEndpoint} from '../Context/EndpointContext'
 const Signup = () =>{
+  const roverEndpoint = useEndpoint()
     const [username,setUsername] = useState(null)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,7 +23,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://localhost:8080/user/signup", requestOptions)
+fetch(`${roverEndpoint}/user/signup`, requestOptions)
   .then(response => {
     if(response.status === 200){
       response.json().then((response) => Cookies.set('token',response))
@@ -39,15 +40,13 @@ fetch("http://localhost:8080/user/signup", requestOptions)
       .catch((error) => {
         console.error("Error:", error);
       })
-      // if(username.length<1 || email.length<1 || password.legth<1){
-      // alert('Please fill all fields')
-      // }
     
     }
     return(
         <>
         {authenticated && <Redirect to="/record-your-experience" />}
         <div className="signup">
+          <h3>Signup</h3>
         <form onSubmit={loginSubmit}>
         <label>
         Username

@@ -7,12 +7,13 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapPin, faCameraRetro } from "@fortawesome/free-solid-svg-icons";
+import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
-import { capitalize, Typography } from "@material-ui/core";
+import { Editor } from "@tinymce/tinymce-react";
+import {useEndpoint} from '../Context/EndpointContext'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,16 +28,23 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 500,
-      alignSelf: 'center'
+      minWidth: 300,
+      alignSelf: "center",
+      fontSize: "5rem",
     },
     places: {
       fontFamily: "Roboto",
       fontSize: 20,
+      fontWeight: 300,
     },
     typo: {
-      textAlign: "centre",
+      textAlign: "left",
+      fontWeight: "fontWeightBold",
+      paddingLeft: 25,
     },
+    // placetag:{
+    //   color: "orange"
+    // }
   })
 );
 
@@ -50,6 +58,13 @@ const Uploadpage = ({ handleSubmit, road }) => {
   const [postDescription, setPostDescription] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
+  const buttonStyle = {
+    fontFamily: "Roboto",
+    backgroundColor: "#FF4500",
+    color: "white",
+    fontSize: "1rem",
   };
 
   let array1 = [
@@ -162,15 +177,12 @@ const Uploadpage = ({ handleSubmit, road }) => {
     },
   ];
 
-  const buttonStyle = {
-    fontFamily: "Pangolin",
-  };
   const array3 = array1.concat(array2);
   const classes = useStyles();
   const [place, setPlace] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
-
+  const roverEndpoint = useEndpoint()
   const handlePlacelist = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPlace(event.target.value);
   };
@@ -204,7 +216,7 @@ const Uploadpage = ({ handleSubmit, road }) => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:8080/post/create", requestOptions)
+    fetch(`${roverEndpoint}/post/create`, requestOptions)
       .then((response) => response.text())
       .then((result) => result)
       .catch((error) => console.log("error", error));
@@ -216,42 +228,71 @@ const Uploadpage = ({ handleSubmit, road }) => {
     setSelectedFiles(e.target.files);
   };
 
+  const handleEditorChange = (content, editor) => {
+    setPostDescription(content);
+  };
+
   return (
     <>
-      <div>
-        <div className="location-section">
-          {/* <Button className={classes.button}>Pick location</Button> */}
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-controlled-open-select-label">
-              Place
-            </InputLabel>
-            <Select
-              labelId="demo-controlled-open-select-label"
-              id="demo-controlled-open-select"
-              open={open}
-              onClose={handleClose}
-              onOpen={handleOpen}
-              value={place}
-              onChange={handlePlacelist}
-            >
-              <MenuItem value={`${road.road}, ${road.suburb}`}>
-                <em>{`${road.road}, ${road.suburb} - (current location)`}</em>
-              </MenuItem>
-              <MenuItem> or </MenuItem>
-              {array3.map((each) => {
-                return (
-                  <MenuItem
-                    value={each.name}
-                    key={each.distance}
-                    className={classes.places}
-                  >
-                    {each.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </div>
+      <div className="location-section">
+        <FormControl className={classes.formControl}>
+          <InputLabel
+            id="demo-controlled-open-select-label"
+            className={classes.placetag}
+          >
+            Place
+          </InputLabel>
+          <Select
+            labelId="demo-controlled-open-select-label"
+            id="demo-controlled-open-select"
+            open={open}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            value={place}
+            onChange={handlePlacelist}
+          >
+            <MenuItem value={`${road.road}, ${road.suburb}`}>
+              <em>{`${road.road}, ${road.suburb} - (current location)`}</em>
+            </MenuItem>
+            <MenuItem> or </MenuItem>
+            {array3.map((each) => {
+              return (
+                <MenuItem
+                  value={each.name}
+                  key={each.distance}
+                  className={classes.places}
+                >
+                  {each.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </div>
+      <br />
+      <br />
+      <div className="upload-section">
+        <form>
+          <div className="post-section">
+            <label for="inputFiles">
+              <FontAwesomeIcon
+                icon={faCameraRetro}
+                size="3x"
+                style={{ color: "black" }}
+              />{" "}
+            </label>
+
+            <input
+              type="file"
+              onChange={fileSelectedHandler}
+              multiple
+              id="inputFiles"
+              name="photos"
+              hidden
+              accept="image/png, image/jpeg"
+            />
+          </div>
+        </form>
         {selectedFiles.length ? (
           <div className="switch">
             <FormControlLabel
@@ -267,53 +308,37 @@ const Uploadpage = ({ handleSubmit, road }) => {
             />
           </div>
         ) : null}
-      </div>
-
-      <br />
-      <br />
-      <div className="upload-section">
-        <Typography className={classes.typo}>{`Title: ${place}`}</Typography>
-
-        <form>
-          <div className="post-section">
-            <label for="inputFiles">
-              <FontAwesomeIcon
-                icon={faCameraRetro}
-                size="1x"
-                style={{ color: "grey" }}
-              />{" "}
-            </label>
-
-            <input
-              type="file"
-              onChange={fileSelectedHandler}
-              multiple
-              id="inputFiles"
-              name="photos"
-              hidden
-              accept="image/png, image/jpeg"
-            />
-          </div>
-        </form>
-        <form className="post-section1">
-          <textarea
-            value={postDescription}
-            onChange={(event) => setPostDescription(event.target.value)}
-            id="experience-textfield"
-            placeholder="What your experience in this place?"
-            name="experience-textfield"
-            rows="20"
-            cols="50"
-          ></textarea>
-          <br />
-          <br />
-        </form>
-        <button type="submit" onClick={handleSubmitPost}>
-          Save
-        </button>
-        {/* <Button style={buttonStyle}  variant="contained" color="primary"> Save </Button> */}
         {posted && <Redirect to="/profile" />}
-      </div>
+      </div>{" "}
+      <br />
+      <br />
+      <br />
+      <Editor
+        apiKey="mkoaeakstug1m5gt3hpdotk40cnf5i678r19bxgls9hqqhgv"
+        initialValue="<p>Write your experience...</p>"
+        init={{
+          height: 400,
+          menubar: false,
+          statusbar: false,
+           width:700,
+          fontFamily: "Dancing Script",
+          plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table paste code help wordcount",
+          ],
+          toolbar:
+            "undo redo | formatselect | bold italic backcolor | \
+             alignleft aligncenter alignright alignjustify | \
+             bullist numlist outdent indent | removeformat | help",
+        }}
+        onEditorChange={handleEditorChange}
+      />{" "}
+      <br />
+      <br />
+      <Button style={buttonStyle} type="submit" onClick={handleSubmitPost}>
+        Save
+      </Button>
     </>
   );
 };
