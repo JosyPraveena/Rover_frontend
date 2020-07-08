@@ -3,8 +3,31 @@ import Cookies from 'js-cookie'
 import { useHistory } from "react-router-dom";
 import {useEndpoint} from '../Context/EndpointContext'
 import MyContext from '../Context/PostContext'
+import Grid from '@material-ui/core/Grid';
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Paper from '@material-ui/core/Paper'
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root:{
+      maxWidth: '100%',
+      height: 800,
+      justifyContent: 'center',
+      // marginTop: '20vh',
+    },
+    griditem:{
+      justifyContent:'center',
+      width: 500,
+      height: 500,
+      // marginTop: '5vh',
+      // border: '1px solid red',
+      paddingLeft: 10
+    }
+  }))
 const Signup = () =>{
+
+  const classes = useStyles();
   const roverEndpoint = useEndpoint()
     const [username,setUsername] = useState(null)
     const [email, setEmail] = useState("");
@@ -54,12 +77,27 @@ fetch(`${roverEndpoint}/user/signup`, requestOptions)
       })
     
     }
+
+    const buttonStyle = {
+      fontFamily: "Roboto",
+      backgroundColor: "#FF4500",
+      color: "white",
+      fontSize: "1rem"
+    };
     return(
         <>
-        <div className="signup">
-          <h3>Signup</h3>
+        {/* <div className="signup"> */}
+        <div className='signup-page'>
+        <Grid container jutify='center' className={classes.root}> 
+        <Grid container>
+          <Grid item xs={12}>
+          <h1 style={{fontWeight: 'bold',fontFamily:'Dancing Script',color: '#ff4500'}}>Rover</h1>
+          </Grid>
+        </Grid>
+          <Grid item xs={3} jutify='center' className={classes.griditem}>
+          <h4 style={{fontFamily:'Roboto',color:'#ff4500',fontSize:'2rem'}}>Signup</h4>
         <form onSubmit={loginSubmit}>
-        <label>
+        <label style={{fontFamily:'Roboto',color:'#ff4500',fontSize:'1.2rem'}}>
         Username
         <input
           value={username}
@@ -69,8 +107,8 @@ fetch(`${roverEndpoint}/user/signup`, requestOptions)
         />
       </label>
       <br />
-      <label>
-        Email
+      <label style={{fontFamily:'Roboto',color:'#ff4500',fontSize:'1.2rem'}}>
+        Email Address
         <input
           value={email}
           onChange={event => setEmail(event.target.value)}
@@ -79,7 +117,7 @@ fetch(`${roverEndpoint}/user/signup`, requestOptions)
         />
       </label>
       <br />
-      <label>
+      <label style={{fontFamily:'Roboto',color:'#ff4500',fontSize:'1.2rem'}}>
         Password
         <input
           value={password}
@@ -90,11 +128,23 @@ fetch(`${roverEndpoint}/user/signup`, requestOptions)
       </label>
       <br />
       <br/>
-      <div className="btns">
-      <button>Submit</button> 
-      </div>
+      {/* <div className="btns">
+      <button style={buttonStyle}>Submit</button> 
+      </div> */}
+      <Button
+            style={buttonStyle}
+            variant="contained"
+            // className="link"
+            // component={Link}
+            // to={"/sign-up"}
+          >
+            Sign up{" "}
+          </Button>
         </form>
-      </div>
+        </Grid>
+        </Grid>
+        </div>
+      {/* </div> */}
         </>
     )
 }

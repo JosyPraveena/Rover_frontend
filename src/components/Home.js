@@ -62,9 +62,8 @@ const Topbar = () => {
     <>
       <div className="Homepage">
         <div id="homepage-navbar">
-          <h1>Rover</h1>
-          {/* <Link to="/login" style={{ textDecoration: 'none' }}><h6>Login</h6></Link> */}
-          <Popup trigger={<h6>Login</h6>} modal closeOnDocumentClick contentStyle={{width: "400px" , borderRadius : "25px",backgroundColor:"#ffe6dd"}}>
+          <h1 style={{fontWeight: 'bold'}}>Rover</h1>
+          <Popup trigger={<h6>Login</h6>} modal closeOnDocumentClick contentStyle={{width: "400px" , height:'450px',borderRadius : "25px",backgroundColor:"#ffe6dd"}}>
             <div className="login-container">
               <div className="login-div">
                 <h6>login</h6>
@@ -100,10 +99,8 @@ const Topbar = () => {
           </Popup>  
         </div>
         <div className="intro-section">
-          <h2>A travelogue for every kind of modern day adventurer</h2>
-          <br />
+          <h2 style={{fontWeight : 'bold'}}>A travelogue for every kind of modern day adventurer</h2>
           <h5>Capture, share, plan and celebrate the joy of travelling</h5>
-          <br />
           <Button
             style={buttonStyle}
             variant="contained"

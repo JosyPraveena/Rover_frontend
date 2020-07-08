@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
       padding: theme.spacing(5),
-      paddingTop: 100,
+      paddingTop: 50,
       maxwidth: "100%",
-      height: '100%',
-      // backgroundColor: '#fffbf7'
+      height: 3500,
+      backgroundColor: '#fffbf7'
     },
     paper: {
      
@@ -99,6 +99,17 @@ const useStyles = makeStyles((theme: Theme) =>
     linktitle:{
       textDecoration: 'none',
       color: 'black'
+    },
+    postdescription:{
+      overflow: 'hidden',
+      lineHeight: '1.2em',
+      height: '3.6em',
+      // textOverflow: 'ellipsis',
+      // whiteSpace: 'nowrap',
+    },
+    heading:{
+      fontFamily: 'Dancing SCript',
+      paddingBottom: 30
     }
   })
 );
@@ -125,8 +136,6 @@ export default function Feeds() {
         });
     }
     fetchPost();
-    ellipsify()
-
   }, [roverEndpoint]);
 
   // useEffect(() => {
@@ -140,24 +149,17 @@ export default function Feeds() {
   //   fetchSearchresults();
   // }, [searchStatus,roverEndpoint]);
   
-  const ellipsify = (str) =>{
-    // console.log(str)
-    if (str && str.length > 15) {
-      return (str.substring(0, 30) + "...");
-  }
-  else {
-      return str;
-  }
-  }
 
   return (
     <>
      <Feedsnavbar />
      <FadeIn>
       {/* <div className="feed-page"> */}
-        <Grid container className={classes.root} justify='center'>
+        <Grid container className={classes.root} justify='center' >
+        
           <Grid item xs={8}>
-          {searchResults && searchResults.length != null ? searchResults ?
+          <Typography variant='h2' color='black' className={classes.heading}>Escapades</Typography> 
+          {searchResults && searchResults.length != null ? searchResults &&
             searchResults.map((each) => {
               let picture = "https://www.tellerreport.com/images/no-image.png";
 
@@ -171,7 +173,9 @@ export default function Feeds() {
               return each.view === true ? (
                 <Paper className={classes.paper} key={each._id} elevation={6}>
                   <Grid container spacing={3} alignItems="center">
+                   
                     <Grid item className={classes.imageitem} justify='center'>
+
                       <ButtonBase className={classes.image} onClick={handleOpen}>
                         <img
                         textAlign='center'
@@ -180,16 +184,21 @@ export default function Feeds() {
                           src={picture}
                         />
                       </ButtonBase>
+                      <Modal open={open} onClose={handleClose}>
+								<div className={classes.pictureContainer}>
+									<img className={classes.picture} alt='complex' src={picture} />
+								</div>
+							</Modal>
                       
                     </Grid>
                     <Grid item xs={12} sm container>
                       <Grid item xs container direction="column" spacing={2} className={classes.textContainer}>
                         <Grid item xs>
-                          <Typography className={classes.linktitle} gutterBottom variant="h4" component={Link} to={`/post/${each._id}`}>
+                          <Typography className={classes.linktitle} gutterBottom variant="h6" component={Link} to={`/post/${each._id}`}>
                             {each.post_title}
                           </Typography>
                           <Typography variant="body2" gutterBottom>
-                            {ellipsify(parse(each.post_description))}
+                            {parse(each.post_description)}
                           </Typography>
                         </Grid>
                         <Grid item>
@@ -212,12 +221,10 @@ export default function Feeds() {
                           )}
                         </Typography>
                       </Grid>
-                    </Grid>
-                   
-                  </Grid>
+                    </Grid></Grid>
                 </Paper>
               ) :  null
-            }) : <div>Sorry</div>
+            } )  
            : data &&
             data.map((each) => {
               let picture = "https://www.tellerreport.com/images/no-image.png";
@@ -252,8 +259,8 @@ export default function Feeds() {
                           <Typography className={classes.linktitle} gutterBottom variant="h4" component={Link} to={`/post/${each._id}`}>
                             {each.post_title}
                           </Typography>
-                          <Typography variant="body2" gutterBottom align="justify">
-                            {parse(each.post_description)}
+                          <Typography variant="body2" gutterBottom align="justify" className={classes.postdescription}>
+                            { parse(each.post_description)}
                           </Typography>
                         </Grid>
                         <Grid item>

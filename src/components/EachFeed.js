@@ -134,10 +134,10 @@ const EachFeed = () =>{
                             "MMMM Do YYYY, h:mm:ss a"
                           )}</Typography>
             <br/><br/>
-            <Grid container justify='center' className={classes.slider}>
+            <Grid container  className={classes.slider}>
               <Grid item xs={6} justify='center'>
 
-              <GridList className={classes.gridList} cols={2.5}>
+              <GridList className={classes.gridList} cols={1.5}>
               {data && data.images.map((each) => (
                         // <GridListTile key={each.name} justify='center'>
                           // <div style={{ maxWidth: "100%", maxHeight: "100%" }}>

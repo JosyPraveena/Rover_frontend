@@ -387,9 +387,11 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                         statusbar: false,
                         width: 500,
                         fontFamily: "Dancing Script",
-                        display: "inline-block",
+                        display: "flex",
+                        justifyContent:'center',
                         overflow: "hidden",
                         borderRadius: 25,
+                        
                         plugins: [
                           "advlist autolink lists link image charmap print preview anchor",
                           "searchreplace visualblocks code fullscreen",

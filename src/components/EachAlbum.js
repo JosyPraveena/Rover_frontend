@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     gridList: {
-      flexWrap: "wrap",
+      flexWrap: "nowrap",
       // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
       transform: "translateZ(0)",
     },
@@ -187,7 +187,7 @@ const EachAlbum = () => {
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "center",
+                      // justifyContent: "center",
                       alignItems: "center",
                       // backgroundColor: "#f5f5f5"
                 
@@ -196,7 +196,7 @@ const EachAlbum = () => {
               
                     <GridList
                       className={classes.gridList}
-                      cols={2.3}
+                      cols={3}
                       elevation={6}
                       //   {postData.images.length > 1 ? cols={1.5} : cols={2.5}}
                     >
@@ -211,7 +211,18 @@ const EachAlbum = () => {
                         </GridListTile>
                       ))}
                     </GridList>
-                    <label for="inputFiles">
+                  
+                  </div>{" "}
+                  <br /> <br />
+                  {editFlag === false ? (
+                    // <Paper className={classes.paper}>
+                    <Typography align="justify" fontFamily='Dancing Scripts'>
+                      {parse(postData.post_description)}
+                    </Typography>
+                    // </Paper>
+                  ) : (
+                    <Grid item xs={12}>
+                        <label for="inputFiles">
                         <AddAPhotoIcon
                           fontSize="large"
                           className={classes.icon}
@@ -226,16 +237,6 @@ const EachAlbum = () => {
                       accept="image/png, image/jpeg"
                       hidden
                     />
-                  </div>{" "}
-                  <br /> <br />
-                  {editFlag === false ? (
-                    // <Paper className={classes.paper}>
-                    <Typography align="justify" fontFamily='Dancing Scripts'>
-                      {parse(postData.post_description)}
-                    </Typography>
-                    // </Paper>
-                  ) : (
-                    <Grid item xs={12}>
                     <Editor
                       apiKey="mkoaeakstug1m5gt3hpdotk40cnf5i678r19bxgls9hqqhgv"
                       initialValue={`<p>${postData.post_description}<p>`}
