@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,10 +8,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
-import { FaUserAlt, FaBinoculars, FaCalendar } from "react-icons/fa";
+import { FaUserAlt, FaBinoculars, FaDoorOpen } from "react-icons/fa";
+import {FiLogOut} from 'react-icons/fi'
 import {IoIosPeople} from 'react-icons/io'
 import { MdAddLocation } from "react-icons/md";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory,Redirect } from "react-router-dom";
+import MyContext from '../Context/PostContext';
+import Cookies from 'js-cookie'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     grow: {
@@ -26,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: "none",
       fontFamily: "Dancing Script",
       fontSize: "3.5rem",
+     
       [theme.breakpoints.up("sm")]: {
         display: "block",
       },
@@ -45,6 +49,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     sectionDesktop: {
       display: "none",
+      "&:hover": {
+				transition: "all 0.3s ease-in-out",
+				color: "#e62429",
+			},
       [theme.breakpoints.up("md")]: {
         display: "flex",
       },
@@ -63,16 +71,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Nav() {
   const classes = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
+  const {token} = useContext(MyContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleClick = () => {
-    history.push("/record-your-experience");
-  };
+  const handleLogut = () =>{
+
+  }
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -85,6 +94,10 @@ export default function Nav() {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleLogout = () =>{
+    Cookies.remove(token)
+  }
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -130,13 +143,22 @@ export default function Nav() {
         </MenuItem>
         <MenuItem>
           <IconButton>
-            <MdAddLocation size={32} color="#ff5111" onClick={handleClick} />
+            <Link to='/record-your-experience'>
+            <MdAddLocation size={32} color="#ff5111"/>
+            </Link>
           </IconButton>
         </MenuItem>
         <MenuItem>
           <IconButton>
             <Link to="/find-travel-buddies">
               <IoIosPeople size={35} color="#ff5111" />
+            </Link>
+          </IconButton>
+        </MenuItem>
+        <MenuItem>
+          <IconButton>
+            <Link to="/">
+              <FiLogOut size={32} color="#ff5111" onClick={handleLogout}/>
             </Link>
           </IconButton>
         </MenuItem>
@@ -152,7 +174,7 @@ export default function Nav() {
             className={classes.title}
             variant="h4"
             component={Link}
-            to="/"
+            to="/profile"
           >
             Rover
           </Typography>
@@ -169,13 +191,20 @@ export default function Nav() {
               </Link>
             </IconButton>
             <IconButton>
-              <MdAddLocation size={32} color="white" onClick={handleClick} />
+              <Link to='/record-your-experience'>
+              <MdAddLocation size={32} color="white"/>
+              </Link>
             </IconButton>
             <IconButton color="inherit">
               <Link to="/find-travel-buddies">
                 <IoIosPeople size={35} color="white" />
               </Link>
             </IconButton>
+            <IconButton>
+            <Link to="/">
+              <FiLogOut size={32} color="white" onClick={handleLogut} />
+            </Link>
+          </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

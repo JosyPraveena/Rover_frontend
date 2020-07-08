@@ -1,6 +1,5 @@
 import React, { useState, useEffect,useContext } from "react";
 import {
-  fade,
   makeStyles,
   createStyles,
   Theme,
@@ -11,30 +10,35 @@ import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Feedsnavbar from "../components/Feedsnavbar";
 import parse from "html-react-parser";
-import Box from "@material-ui/core/Box";
 import moment from "moment";
 import MyContext from "../Context/PostContext";
 import Modal from "@material-ui/core/Modal";
 import {useEndpoint} from '../Context/EndpointContext'
-
 import FadeIn from "react-fade-in";
-
+import {Link} from 'react-router-dom'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
       padding: theme.spacing(5),
-      paddingTop: 100
+      paddingTop: 100,
+      maxwidth: "100%",
+      height: '100%',
+      // backgroundColor: '#fffbf7'
     },
     paper: {
+     
+      height: 'auto',
       padding: theme.spacing(2),
       margin: "auto",
-      maxWidth: 1000,
+      maxWidth: "100%",
       marginBottom: 40,
 		transition: "all 0.3s ease-out",
 		"&:hover": {
 			opacity: 1,
-			transform: "translateY(-5px)",
+      transform: "translateY(-5px)",
+      background: "#ffcdbb",
+      color: 'black'
 		},
     },
     image: {
@@ -42,14 +46,37 @@ const useStyles = makeStyles((theme: Theme) =>
       // height: "auto"
       maxWidth: "100%",
       maxHeight: "100%",
+      [theme.breakpoints.down(1196)]: {
+        maxWidth: "200%",
+        maxHeight: "200%",
+        // paddingLeft: 200
+        // justify: 'center'
+      }
     },
     img: {
       // margin: "auto",
       // display: "block",
       width: 200,
       height: 150,
+      [theme.breakpoints.down(1196)]: {
+        // paddingLeft: 100
+        // maxWidth: "100%",
+        // maxHeight: '100%'
+
+        width: 700,
+      height: 200,
+      },
+      [theme.breakpoints.down(1171)]: {
+        // paddingLeft: 100
+        // maxWidth: "100%",
+        // maxHeight: '100%'
+
+        width: 690,
+      height: 200,
+      }
+      
     },
-    picture: {
+    picture: {  
 			maxWidth: "100%",
 			maxHeight: "100%",
 		},
@@ -61,33 +88,17 @@ const useStyles = makeStyles((theme: Theme) =>
 				width: "300px",
 			},
 		},
-
-    search: {
-      position: "relative",
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
-      width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-      },
-    },
-    searchIcon: {
-      padding: theme.spacing(0, 2),
-      height: "100%",
-      position: "absolute",
-      pointerEvents: "none",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
     textContainer:{
       width: 505
+    },
+    imageitem:{
+      [theme.breakpoints.down(1196)]: {
+        paddingLeft: 100
+      },
+    },
+    linktitle:{
+      textDecoration: 'none',
+      color: 'black'
     }
   })
 );
@@ -96,9 +107,8 @@ export default function Feeds() {
   const classes = useStyles();
   const roverEndpoint = useEndpoint()
   const [data, setData] = useState(null);
-  const [searchStatus, setSearchStatus] = useState(false);
-  const { searchContent, setSearchContent} = useContext(MyContext)
-  console.log(searchContent, setSearchContent)
+
+ const { searchStatus, setSearchStatus,searchResults,setSearchResults,searchContent} = useContext(MyContext)
   const [open, setOpen] = useState(false);
 	const handleOpen = () => {
 		setOpen(true);
@@ -115,28 +125,100 @@ export default function Feeds() {
         });
     }
     fetchPost();
+    ellipsify()
+
   }, [roverEndpoint]);
 
-  useEffect(() => {
-    async function fetchSearchresults() {
-      await fetch(`${roverEndpoint}/search-results/${searchStatus}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setSearchStatus(data);
-        });
-    }
-    fetchSearchresults();
-  }, [searchStatus,roverEndpoint]);
+  // useEffect(() => {
+  //   async function fetchSearchresults() {
+  //     await fetch(`${roverEndpoint}/search-results/${searchStatus}`)
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setSearchData(data);
+  //       });
+  //   }
+  //   fetchSearchresults();
+  // }, [searchStatus,roverEndpoint]);
+  
+  const ellipsify = (str) =>{
+    // console.log(str)
+    if (str && str.length > 15) {
+      return (str.substring(0, 30) + "...");
+  }
+  else {
+      return str;
+  }
+  }
 
   return (
     <>
-     <MyContext.Provider value={{searchContent, setSearchContent}}>
      <Feedsnavbar />
-     </MyContext.Provider>
      <FadeIn>
-      <div className="feed-page">
-        <Grid container className={classes.root}>
-          {data ? (
+      {/* <div className="feed-page"> */}
+        <Grid container className={classes.root} justify='center'>
+          <Grid item xs={8}>
+          {searchResults && searchResults.length != null ? searchResults ?
+            searchResults.map((each) => {
+              let picture = "https://www.tellerreport.com/images/no-image.png";
+
+              if (
+                each.images.length &&
+                (each.images[0].path !== null ||
+                  each.images[0].path !== undefined)
+              ) {
+                picture = `${roverEndpoint}${each.images[0].path}`;
+              }
+              return each.view === true ? (
+                <Paper className={classes.paper} key={each._id} elevation={6}>
+                  <Grid container spacing={3} alignItems="center">
+                    <Grid item className={classes.imageitem} justify='center'>
+                      <ButtonBase className={classes.image} onClick={handleOpen}>
+                        <img
+                        textAlign='center'
+                          className={classes.img}
+                          alt="complex"
+                          src={picture}
+                        />
+                      </ButtonBase>
+                      
+                    </Grid>
+                    <Grid item xs={12} sm container>
+                      <Grid item xs container direction="column" spacing={2} className={classes.textContainer}>
+                        <Grid item xs>
+                          <Typography className={classes.linktitle} gutterBottom variant="h4" component={Link} to={`/post/${each._id}`}>
+                            {each.post_title}
+                          </Typography>
+                          <Typography variant="body2" gutterBottom>
+                            {ellipsify(parse(each.post_description))}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography
+                            variant="h6"
+                            style={{
+                              cursor: "pointer",
+                              fontStyle: "italic",
+                              fontSize: "1rem",
+                            }}
+                          >
+                            - {each.username}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid item>
+                        <Typography style={{ fontStyle: "italic" }}>
+                          {moment(`${each.post_date}`).format(
+                            "MMMM Do YYYY, h:mm:ss a"
+                          )}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                   
+                  </Grid>
+                </Paper>
+              ) :  null
+            }) : <div>Sorry</div>
+           : data &&
             data.map((each) => {
               let picture = "https://www.tellerreport.com/images/no-image.png";
 
@@ -167,10 +249,10 @@ export default function Feeds() {
                     <Grid item xs={12} sm container>
                       <Grid item xs container direction="column" spacing={2} className={classes.textContainer}>
                         <Grid item xs>
-                          <Typography gutterBottom variant="h5">
+                          <Typography className={classes.linktitle} gutterBottom variant="h4" component={Link} to={`/post/${each._id}`}>
                             {each.post_title}
                           </Typography>
-                          <Typography variant="body2" gutterBottom>
+                          <Typography variant="body2" gutterBottom align="justify">
                             {parse(each.post_description)}
                           </Typography>
                         </Grid>
@@ -178,7 +260,6 @@ export default function Feeds() {
                           <Typography
                             variant="h6"
                             style={{
-                              cursor: "pointer",
                               fontStyle: "italic",
                               fontSize: "1rem",
                             }}
@@ -198,13 +279,12 @@ export default function Feeds() {
                    
                   </Grid>
                 </Paper>
-              ) : null;
+              ) : <div> {`Sorry! Experiences on ${searchContent} is not recorded yet`}</div>;
             })
-          ) : (
-            <div>Loading</div>
-          )}
+          }
+          </Grid>
         </Grid>
-      </div>
+      {/* </div> */}
       </FadeIn>
     </>
   );

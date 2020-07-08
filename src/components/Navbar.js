@@ -1,17 +1,17 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
-import IconButton from "@material-ui/core/IconButton";
-import { createMuiTheme } from "@material-ui/core/styles";
-import black from "@material-ui/core/colors/blue";
-import { Grid } from "@material-ui/core";
-// import PermIdentityIcon from '@material-ui/icons/PermIdentity';
-import { GiBinoculars} from "react-icons/gi";
-import {AiOutlineUser,AiOutlineCalendar} from 'react-icons/ai';
+// import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+// import AppBar from "@material-ui/core/AppBar";
+// import Toolbar from "@material-ui/core/Toolbar";
+// import Typography from "@material-ui/core/Typography";
+// import Button from "@material-ui/core/Button";
+// import { Link } from "react-router-dom";
+// import IconButton from "@material-ui/core/IconButton";
+// import { createMuiTheme } from "@material-ui/core/styles";
+// import black from "@material-ui/core/colors/blue";
+// import { Grid } from "@material-ui/core";
+// // import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+// import { GiBinoculars} from "react-icons/gi";
+// import {AiOutlineUser,AiOutlineCalendar} from 'react-icons/ai';
  import {FaUserAlt,FaBinoculars,FaCalendar} from 'react-icons/fa'
 import { MdAddLocation } from "react-icons/md";
 

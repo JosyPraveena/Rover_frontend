@@ -9,7 +9,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
+import { red ,blue,green} from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -23,15 +23,21 @@ import {
   FcDepartment,
 } from "react-icons/fc";
 import Chip from "@material-ui/core/Chip";
-import {MdTrain} from 'react-icons/md'
-
+import {MdTrain,MdDirectionsBus} from 'react-icons/md'
+import {GiSailboat} from 'react-icons/gi'
+import FadeIn from "react-fade-in";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+
+    root:{
+      width: '100%',
+      height: 'auto'
+    },
     title: {
       fontFamily: "Dancing Script",
       fontSize: "3rem",
       paddingTop: 30,
-      textShadow: '1px 1px #ff0000'
+
 
     },
     // root: {
@@ -44,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 400,
       margin: theme.spacing(3),
       // marginTop: "10vh",
-      height: 450,
+      height: 'auto',
     },
     media: {
       height: 0,
@@ -52,6 +58,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     avatar: {
       backgroundColor: red[500],
+    },
+    avatar1: {
+      backgroundColor: blue[500],
+    },
+    avatar2: {
+      backgroundColor: green[500],
     },
     chip: {
       margin: theme.spacing(1),
@@ -63,9 +75,10 @@ const Travelbuddy = () => {
   return (
     <>
       <Nav />
+      <FadeIn>
       <Typography variant="h3" className={classes.title} align="center">
         Find your travel group
-      </Typography>
+      </Typography> <br/> <br/>
       <Grid container className={classes.root} alignItems="center" justify='center'>
         <Grid item >
           <Card className={classes.card} elevation={6} >
@@ -100,12 +113,12 @@ const Travelbuddy = () => {
             <CardContent>
               <Chip
                 className={classes.chip}
-                icon={<FcBusinesswoman size={30} />  }
+                icon={<FcBusinesswoman size={25} />  }
                 label="Women trip"
               />
               <Chip
                 className={classes.chip}
-                icon={<FcAutomotive size={30} />}
+                icon={<FcAutomotive size={25} />}
                 label="Commute"
               />
               <Chip
@@ -133,14 +146,11 @@ const Travelbuddy = () => {
             <CardHeader
               avatar={
                 <AvatarGroup max={4}>
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    R
+                  <Avatar aria-label="recipe" className={classes.avatar1}>
+                    AJ
                   </Avatar>
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    J
-                  </Avatar>
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    +2
+                  <Avatar aria-label="recipe" className={classes.avatar1}>
+                    P
                   </Avatar>
                 </AvatarGroup>
               }
@@ -160,10 +170,10 @@ const Travelbuddy = () => {
             />
             <CardContent>
             <Chip className={classes.chip}
-        icon={<FcBusinessman size={30}/>}
+        icon={<FcBusinessman size={25}/> }
         label="Men trip"
       />
-      <Chip className={classes.chip} icon={<MdTrain size={30} color='red'/>}
+      <Chip className={classes.chip} icon={<MdTrain size={25} color='red'/>}
       label="Commute"/>
       <Chip  className={classes.chip}icon={<FcDepartment size={25}/>} label="Booked for 3 @Heritage Hotel"/>
             </CardContent>
@@ -185,14 +195,14 @@ const Travelbuddy = () => {
             <CardHeader
               avatar={
                 <AvatarGroup max={4}>
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    R
+                  <Avatar aria-label="recipe" className={classes.avatar2}>
+                    S
                   </Avatar>
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    J
+                  <Avatar aria-label="recipe" className={classes.avatar2}>
+                    P
                   </Avatar>
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    +2
+                  <Avatar aria-label="recipe" className={classes.avatar2}>
+                    +1
                   </Avatar>
                 </AvatarGroup>
               }
@@ -201,13 +211,13 @@ const Travelbuddy = () => {
                   <MoreVertIcon />
                 </IconButton>
               }
-              title="Luxembourg"
-              subheader="September 12, 2020"
+              title="Wansee Boating"
+              subheader="July 28, 2020"
             />
             <CardMedia
               className={classes.media}
               image={
-                "https://www.eu-startups.com/wp-content/uploads/2019/03/Luxembourg.jpg"
+                "https://cdn.getyourguide.com/img/tour/570e2ba17c2f7.jpeg/146.jpg"
               }
             />
             <CardContent>
@@ -215,9 +225,9 @@ const Travelbuddy = () => {
         icon={<FcBusinessman size={30}/>}
         label="Men trip"
       />
-      <Chip className={classes.chip} icon={<MdTrain size={30} color='red'/>}
+      <Chip className={classes.chip} icon={<MdDirectionsBus size={25} color='blue'/>}
       label="Commute"/>
-      <Chip  className={classes.chip}icon={<FcDepartment size={25}/>} label="Booked for 3 @Heritage Hotel"/>
+      <Chip  className={classes.chip}icon={<GiSailboat size={25} color='#ff0c63'/>} label="Boats booked @Bootsverleih Berlin Wannsee"/>
             </CardContent>
             <CardActions disableSpacing>
               <IconButton aria-label="add to favorites">
@@ -233,6 +243,7 @@ const Travelbuddy = () => {
           </Card>
         </Grid>
       </Grid>
+      </FadeIn>
     </>
   );
 };

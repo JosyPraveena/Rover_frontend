@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import React, { useState,useContext } from "react";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import { Redirect } from "react-router-dom";
-import Signup from "../components/Signup";
-import Login from "../components/Login";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Popup from "reactjs-popup";
-import styled from "styled-components"
 import {useEndpoint} from '../Context/EndpointContext'
+import MyContext from '../Context/PostContext'
 
-const Topbar = ({ login, signup, handleClick }) => {
+const Topbar = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
+  // const [authenticated, setAuthenticated] = useState(false);
+  const history = useHistory();
+  const {setToken} = useContext(MyContext)
   const roverEndpoint = useEndpoint()
   const buttonStyle = {
     fontFamily: "Roboto",
@@ -35,11 +35,15 @@ const Topbar = ({ login, signup, handleClick }) => {
       redirect: "follow",
     };
 
-    fetch(  `${roverEndpoint}/user/login`, requestOptions)
+    fetch(`${roverEndpoint}/user/login`, requestOptions)
       .then((response) => {
+        history.push('/record-your-experience')
         if (response.status === 200) {
-          Cookies.set("token", response.headers.get("x-authorization-token"));
-          setAuthenticated(true);
+         
+          const userToken = response.headers.get("x-authorization-token")
+          Cookies.set("token", userToken);
+          setToken(userToken);
+         
         }
         if (response.status === 400) {
           alert("Invalid password");
@@ -93,22 +97,8 @@ const Topbar = ({ login, signup, handleClick }) => {
                 </div>
               </div>
             </div>
-          </Popup>
-
-          {/* <div id="login-button">
-            <Button
-              style={buttonStyle}
-              onClick={handleClick}
-              variant="contained"
-              color="primary"
-              component={Link}
-              to={"/login"}
-            >
-              Login{" "}
-            </Button>
-          </div> */}
+          </Popup>  
         </div>
-
         <div className="intro-section">
           <h2>A travelogue for every kind of modern day adventurer</h2>
           <br />
@@ -116,7 +106,6 @@ const Topbar = ({ login, signup, handleClick }) => {
           <br />
           <Button
             style={buttonStyle}
-            onClick={handleClick}
             variant="contained"
             className="link"
             component={Link}
@@ -130,13 +119,6 @@ const Topbar = ({ login, signup, handleClick }) => {
       <div className="home">
         <div></div>
       </div>
-      {/* {login ? <Login /> : null}
-        {signup ? <Signup /> : null} */}
-      {authenticated && <Redirect to="/record-your-experience" />}
-      {/* <Switch>
-    <Route path={"/login"} render={(props) => ( <Login {...props}/>)}/>
-    <Route path={"/sign-up"} render={(props) => ( <Signup {...props}/>)}/>
-    </Switch>  */}
     </>
   );
 };

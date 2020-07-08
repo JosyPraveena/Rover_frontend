@@ -18,13 +18,18 @@ import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Cookies from "js-cookie";
-import { Redirect } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import MyContext from "../Context/PostContext";
 import {useEndpoint} from '../Context/EndpointContext'
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+// import MyContext from '../Context/PostContext'
+
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,9 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: 350,
       },
     },
-    // container: {
-    //   backgroundColor: "#fffbf7",
-    // },
     button: {
       display: "block",
       marginTop: theme.spacing(2),
@@ -109,32 +111,30 @@ const OverviewPage = () => {
     selectedFiles,
     setSelectedFiles,
   } = useContext(MyContext);
-  console.log(
-    postDescription,
-    // setPostDescription,
-    selectedFiles
-    // setSelectedFiles
-  );
+const history = useHistory()
+const {token} = useContext(MyContext)
   const [username,setUsername] = useState(null)
   const [lat, setLat] = useState(0);
   const [lng, setLon] = useState(0);
-  const [posted, setPosted] = useState(false);
   const [road, setRoad] = useState({
-    house_number: "50",
-    road: "Annenstraße",
-    suburb: "Mitte",
-    city_district: "Mitte",
-    state: "Berlin",
-    postcode: "10179",
-    country: "Germany",
-    country_code: "de",
+    "address29": "KKC Berlin",
+    "house_number": "15",
+    "road": "Weiskopffstraße",
+    "suburb": "Oberschöneweide",
+    "city_district": "Treptow-Köpenick",
+    "state": "Berlin",
+    "postcode": "12459",
+    "country": "Germany",
+    "country_code": "de"
   });
   const roverEndpoint = useEndpoint()
-
+  
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((geo) => {
       setLat(geo.coords.latitude);
       setLon(geo.coords.longitude);
+      // console.log([lat,lng])
+      // Popup.openPopup()
     });
   }, [lat, lng]);
 
@@ -145,46 +145,30 @@ const OverviewPage = () => {
   };
 
 
-
-  //   useEffect(() => {
-  //     async function fetchData() {
-
-  //       const queryUrl = `https://eu1.locationiq.com/v1/reverse.php?key=2ba94cf73afbaa&lat=${lat}&lon=${lng}&format=json`
-  //       const data = await fetch(queryUrl)
-  //       const res = await data.json()
-
-  //       setRoad(res.address)
-  //       setBoundingBox(res.boundingbox)
-  //     //   setSuburb(res.address.suburb)
-  //     }
-  //     fetchData()
-  //   },
-  //     [lat, lng]
-  //   )
-
   useEffect(() => {
-    var myHeaders = new Headers();
-    myHeaders.append("authorization", "Bearer " + Cookies.get("token"));
+    if (token) {
+      var myHeaders = new Headers();
+      myHeaders.append("authorization", "Bearer " + token);
+  
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+  
+      fetch(`${roverEndpoint}/user/me`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => setUsername(result.user_name))
+        .catch((error) => console.log("error", error));
+    }
+  }, [roverEndpoint,token,setUsername]);
 
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch(`${roverEndpoint}/user/me`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => setUsername(result.user_name))
-      .catch((error) => console.log("error", error));
-  }, []);
   const position = [lat, lng];
   const [state, setState] = useState({
     checkedB: false,
   });
 
-
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
@@ -195,119 +179,22 @@ const OverviewPage = () => {
     fontSize: "1rem",
   };
 
-  let array1 = [
-    {
-      lat: "52.5074933",
-      lon: "13.4148099",
-      tag_type: "restaurant",
-      name: "Mom's Kitchen",
-      distance: 28,
-    },
-    {
-      lat: "52.5075711",
-      lon: "13.4146683",
-      tag_type: "restaurant",
-      name: "Bäckerei Bacco",
-      distance: 39,
-    },
-    {
-      lat: "52.5069295",
-      lon: "13.4135957",
-      tag_type: "restaurant",
-      name: "Sushi for you",
-      distance: 123,
-    },
-    {
-      lat: "52.5064781",
-      lon: "13.416557",
-      tag_type: "restaurant",
-      name: "Thai Huong Snack",
-      distance: 140,
-    },
-    {
-      lat: "52.5062984",
-      lon: "13.4171876",
-      tag_type: "restaurant",
-      name: "Rosengarten am Engelbecken",
-      distance: 184,
-    },
-    {
-      lat: "52.5094535",
-      lon: "13.4120303",
-      tag_type: "restaurant",
-      name: "Agora",
-      distance: 310,
-    },
-    {
-      lat: "52.5077516",
-      lon: "13.4206012",
-      tag_type: "restaurant",
-      name: "Berliner Wappen",
-      distance: 365,
-    },
-    {
-      lat: "52.5041376",
-      lon: "13.4178117",
-      tag_type: "restaurant",
-      name: "Die Henne - Alt-Berliner Wirtshaus",
-      distance: 407,
-    },
-    {
-      lat: "52.5038517",
-      lon: "13.4188298",
-      tag_type: "restaurant",
-      name: "Clanndestino",
-      distance: 468,
-    },
-  ];
-  let array2 = [
-    {
-      lat: "52.5071228",
-      lon: "13.4192474741258",
-      tag_type: "park",
-      name: "Michaelkirchplatz",
-      distance: 274,
-    },
-    {
-      lat: "52.5047015",
-      lon: "13.4175068340883",
-      tag_type: "park",
-      name: "Rosengarten",
-      distance: 341,
-    },
-    {
-      lat: "52.50414415",
-      lon: "13.4146040734642",
-      tag_type: "park",
-      name: "Alfred-Döblin-Platz",
-      distance: 369,
-    },
-    {
-      lat: "52.50420385",
-      lon: "13.4171484819274",
-      tag_type: "park",
-      name: "Luisenstädtischer Kanal",
-      distance: 383,
-    },
-    {
-      lat: "52.50560815",
-      lon: "13.4206973877785",
-      tag_type: "park",
-      name: "Immergrüner Garten",
-      distance: 423,
-    },
-    {
-      lat: "52.505573",
-      lon: "13.4208118904297",
-      tag_type: "park",
-      name: "Ehemaliger Luisenstädtischer Kanal",
-      distance: 431,
-    },
-  ];
+  let places = [
+    "Anna Kim","Ristorante-Serafina","Kantinen & Partyservice Siering","Masala","Waldorf School Berlin-southeast",
+    "LGC, Biosearch Technolgies","WBS CODING SCHOOL","Defensor Sicherheitsschule GmbH","Ruwisch & Kollegen GmbH","HIVE Institute","Netto","Rewe"]
 
-  const array3 = array1.concat(array2);
   const [place, setPlace] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [snackOpen,setSnackOpen] = useState(false);
+
+  // const handleSnackOpen = () =>{
+  //   setSnackOpen(true)
+  // }
+
+  const handleSnackClose = () =>{
+    setSnackOpen(false)
+  }
+
 
   const handlePlacelist = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPlace(event.target.value);
@@ -344,11 +231,14 @@ const OverviewPage = () => {
 
     fetch(`${roverEndpoint}/post/create`, requestOptions)
       .then((response) => response.text())
-      .then((result) => result)
+      .then(() => {
+      setRecord(false);
+      setSnackOpen(true);
+      history.push('/profile')
+      })
       .catch((error) => console.log("error", error));
-
-    setPosted(true);
-    setRecord(false);
+      
+    
   };
 
   const fileSelectedHandler = (e) => {
@@ -358,7 +248,7 @@ const OverviewPage = () => {
   const handleEditorChange = (content, editor) => {
     setPostDescription(content);
   };
-  console.log(position)
+
   return (
     <>
       <Nav /> <br/>
@@ -376,12 +266,12 @@ const OverviewPage = () => {
           <Card className={classes.root} elevation={6}>
             <CardMedia>
               <div className="leaflet-container">
-                <Map center={position} zoom={15}>
+                <Map center={position} zoom={15} >
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                   />
-                  <Marker position={position}>
+                  <Marker position={[52.45704149999999,13.5402645]}  openPopup>
                     <Popup>{road.road}</Popup>
                   </Marker>
                 </Map>
@@ -428,14 +318,14 @@ const OverviewPage = () => {
                             <em>{`${road.road}, ${road.suburb} - (current location)`}</em>
                           </MenuItem>
                           <MenuItem> or </MenuItem>
-                          {array3.map((each) => {
+                          {places.map((each) => {
                             return (
                               <MenuItem
-                                value={each.name}
-                                key={each.distance}
+                                value={each}
+                                key={each}
                                 className={classes.places}
                               >
-                                {each.name}
+                                {each}
                               </MenuItem>
                             );
                           })}
@@ -444,6 +334,7 @@ const OverviewPage = () => {
                     </div>
                     <br />
                     <br />
+                    
                     <div style={{ display: "flex" }}>
                       <label for="inputFiles">
                         <AddAPhotoIcon
@@ -475,9 +366,15 @@ const OverviewPage = () => {
                           />
                         </div>
                       ) : null}
-                      {posted && <Redirect to="/profile" />}
+                      {/* {posted  &&  <Redirect to="/profile" />} */}
                     </div>{" "}
                     <br />
+                    {/* <div style={{display:'flex' , alignItems:'baseline',justifyContent: 'space-around'}}>
+                    <lable for='title-area' >Title</lable>
+                    <input id='title-area' type='text'></input>
+                    </div> */}
+                    
+                    {/* <TextField id="standard-basic" label="Standard" variant='standard' /><br/><br/> */}
                     <Grid container justify='center'>
                       <Grid item xs={12}  className={classes.editor}>
                       <Editor
@@ -500,8 +397,8 @@ const OverviewPage = () => {
                         ],
                         toolbar:
                           "undo redo | formatselect | bold italic | \
-            alignleft aligncenter alignright alignjustify | \
-            bullist numlist outdent indent | removeformat | help",
+                          alignleft aligncenter alignright alignjustify | \
+                          bullist numlist outdent indent | removeformat | help",
                       }}
                       onEditorChange={handleEditorChange}
                     />{" "}
@@ -519,6 +416,18 @@ const OverviewPage = () => {
                       >
                         Save
                       </Button>{" "}
+                      {/* <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleSnackClose}
+        // message="Note archived"
+      >
+       {snackOpen && <Alert severity="success">Captured your experience</Alert>}
+      </Snackbar> */}
                     </div>
                   </>
                 )}

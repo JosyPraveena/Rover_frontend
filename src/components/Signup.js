@@ -1,13 +1,18 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useContext} from 'react';
 import Cookies from 'js-cookie'
-import {Redirect} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import {useEndpoint} from '../Context/EndpointContext'
+import MyContext from '../Context/PostContext'
+
 const Signup = () =>{
   const roverEndpoint = useEndpoint()
     const [username,setUsername] = useState(null)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [authenticated,setAuthenticated] = useState(false)
+    // const [authenticated,setAuthenticated] = useState(false)
+    const history = useHistory();
+
+    const {setToken} = useContext(MyContext)
     const loginSubmit = e => {
         e.preventDefault();
         
@@ -25,9 +30,16 @@ var requestOptions = {
 
 fetch(`${roverEndpoint}/user/signup`, requestOptions)
   .then(response => {
+    history.push('/record-your-experience')
     if(response.status === 200){
-      response.json().then((response) => Cookies.set('token',response))
-      .then(setAuthenticated(true));
+      response.json().then((res) => {
+       
+        const userToken = response.headers.get("x-authorization-token")
+        Cookies.set('token',userToken)
+        // console.log(userToken)
+        setToken(userToken)
+        
+      })
     }
     if(response.status === 204){
       alert('Please fill all fields')
@@ -44,7 +56,6 @@ fetch(`${roverEndpoint}/user/signup`, requestOptions)
     }
     return(
         <>
-        {authenticated && <Redirect to="/record-your-experience" />}
         <div className="signup">
           <h3>Signup</h3>
         <form onSubmit={loginSubmit}>

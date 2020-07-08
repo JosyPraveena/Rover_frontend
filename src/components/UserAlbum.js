@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import Navbar from "./Navbar";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -25,6 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 400,
       margin: theme.spacing(3),
       textDecoration: "none",
+      transition: "all 0.3s ease-out",
+      "&:hover": {
+        opacity: 1,
+        transform: "translateY(-15px)",
+      },
     },
     media: {
       height: 200,
@@ -37,6 +41,12 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: "Dancing Script",
       fontSize: "3rem",
     },
+    subtitle:{
+      paddingTop: 20,
+      paddingLeft: 100,
+      fontFamily: "Dancing Script",
+      fontSize: "2rem", 
+    }
   })
 );
 
@@ -66,12 +76,15 @@ const UserAlbum = () => {
       <div className="useralbum">
       <FadeIn>
         <div id="welcome-tag">
-          <GiHand color="#ffcc00" id="hand" size={60} />{" "}
+          <GiHand color="#ffcc00" id="hand" size={60} />
           <Typography className={classes.username}>
             {userData && `${userData.user_name}`}
-          </Typography>
-          
+          </Typography> <br/>
+       
         </div>
+        <Typography className={classes.subtitle}>
+            Your bundle of experiences...
+          </Typography>
         </FadeIn>
       <FadeIn>
         <Grid container className={classes.root} justify="flex-start">

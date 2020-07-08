@@ -1,4 +1,4 @@
-import React, { useState ,useContext} from "react";
+import React, { useState,useEffect,useContext} from "react";
 import {
   fade,
   makeStyles,
@@ -15,11 +15,15 @@ import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
-import { FaUserAlt, FaBinoculars, FaCalendar } from "react-icons/fa";
+import { FaUserAlt, FaBinoculars } from "react-icons/fa";
+import {FiLogOut} from "react-icons/fi";
 import { MdAddLocation } from "react-icons/md";
 import { Link, useHistory } from "react-router-dom";
 import {IoIosPeople} from 'react-icons/io'
 import MyContext from "../Context/PostContext";
+import {useEndpoint} from '../Context/EndpointContext'
+import Cookies from 'js-cookie'
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -98,14 +102,32 @@ const Feedsnavbar = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const { searchContent, setSearchContent} = useContext(MyContext)
-  console.log("inside feednabar"+ searchContent)
+  const {token} = useContext(MyContext)
+  const { searchContent, setSearchContent,searchResults,setSearchResults,searchStatus, setSearchStatus} = useContext(MyContext)
+  const roverEndpoint = useEndpoint()
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const history = useHistory();
-  const handleClick = () => {
-    history.push("/record-your-experience");
-  };
+ 
+  useEffect(()=>{
+    if(!searchContent.length)
+    setSearchResults(null)
+  },[searchContent,setSearchResults])
+
+  const searchSubmit = (e) =>{
+    e.preventDefault();
+
+    fetch(`${roverEndpoint}/search-results/${searchContent}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setSearchResults(data);
+    });
+    // setSearchStatus(true)
+  }
+ 
+  const handleLogout = () =>{
+    Cookies.remove(token)
+  }
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -164,7 +186,7 @@ const Feedsnavbar = () => {
         </MenuItem>
         <MenuItem>
           <IconButton>
-            <MdAddLocation size={32} color="orange" onClick={handleClick} />
+            <MdAddLocation size={32} color="orange"  />
           </IconButton>
         </MenuItem>
         <MenuItem>
@@ -174,10 +196,16 @@ const Feedsnavbar = () => {
             </Link>
           </IconButton>
         </MenuItem>
+        <MenuItem>
+          <IconButton>
+            {/* <Redirect to="/"> */}
+              <FiLogOut size={32} color="#ff5111" />
+            {/* </Redirect> */}
+          </IconButton>
+        </MenuItem>
       </Grid>
     </Menu>
   );
-console.log(searchContent)
   return (
     <>
       <div className={classes.grow}>
@@ -185,14 +213,15 @@ console.log(searchContent)
           <Toolbar>
             <Typography className={classes.title} noWrap variant="h4"
             component={Link}
-            to="/">
+            to="/profile">
               Rover
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
-              <InputBase
+              <form onSubmit={searchSubmit}>
+              <InputBase 
                 color="inherit"
                 placeholder="Search…"
                 classes={{
@@ -201,8 +230,9 @@ console.log(searchContent)
                 }}
                 inputProps={{ "aria-label": "search" }}
                 value={searchContent}
-                // onChange={(e) => setSearchContent(e.target.value)}
+                onChange={(e) => setSearchContent(e.target.value)}
               />
+              </form>
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
@@ -217,13 +247,23 @@ console.log(searchContent)
                 </Link>
               </IconButton>
               <IconButton>
-                <MdAddLocation size={32} color="white" onClick={handleClick} />
+                <Link to='/record-your-experience'> 
+                <MdAddLocation size={32} color="white"  />
+                </Link>
               </IconButton>
               <IconButton>
                 <Link to="/find-travel-buddies">
                 <IoIosPeople size={35} color="white" />
                 </Link>
               </IconButton>
+             
+              <IconButton>
+              <Link to="/">
+              <FiLogOut size={32} color="white" onClick={handleLogout}/>
+              </Link>
+            {/* </Redirect> */}
+          </IconButton>
+         
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
