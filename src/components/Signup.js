@@ -50,8 +50,9 @@ const Signup = () => {
   const { setToken } = useContext(MyContext);
 
   const loginSubmit = (e) => {
-    e.preventDefault();
-
+    
+    if(e.key === 'Enter' || e.target.innerText === "SIGN UP") {
+      e.preventDefault();
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -88,7 +89,7 @@ const Signup = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-  };
+  }};
 
   const buttonStyle = {
     fontFamily: "Roboto",
@@ -126,7 +127,7 @@ const Signup = () => {
             </h4>{" "}
             <br />
             <div>
-            <form onSubmit={loginSubmit}>
+            <form onKeyPress={(e) => loginSubmit(e)}>
               <label
                 style={{
                   fontFamily: "Roboto",
@@ -181,7 +182,7 @@ const Signup = () => {
               {/* <div className="btns">
       <button style={buttonStyle}>Submit</button> 
       </div> */}
-              <Button style={buttonStyle} variant="contained">
+              <Button style={buttonStyle} variant="contained" onClick={(e) => loginSubmit(e)}>
                 Sign up{" "}
               </Button>
             </form>

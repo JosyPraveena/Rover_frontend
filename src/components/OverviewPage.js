@@ -135,7 +135,13 @@ const {token} = useContext(MyContext)
       setLon(geo.coords.longitude);
       // console.log([lat,lng])
       // Popup.openPopup()
-    });
+      
+    },
+    (err) => {
+      alert('Fetching the Position failed, please check location is enable!');
+    },
+    {enableHighAccuracy: true}
+    );
   }, [lat, lng]);
 
   const [record, setRecord] = useState(false);
@@ -182,8 +188,8 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   };
 
   let places = [
-    "Anna Kim","Ristorante-Serafina","Kantinen & Partyservice Siering","Masala","Waldorf School Berlin-southeast",
-    "LGC, Biosearch Technolgies","WBS CODING SCHOOL","Defensor Sicherheitsschule GmbH","Ruwisch & Kollegen GmbH","HIVE Institute","Netto","Rewe"]
+    "Anna Kim","Ristorante-Serafina","Kantinen & Partyservice Siering","Masala","Waldorf School Berlin-southeast","Berliner Zentrum Industriekultur","Waldowplatz",
+    "LGC, Biosearch Technolgies","WBS CODING SCHOOL","Promenade am Kranhauscafe","Defensor Sicherheitsschule GmbH","Ruwisch & Kollegen GmbH","HIVE Institute","Netto","Rewe"]
 
   const [place, setPlace] = React.useState("");
   const [open, setOpen] = React.useState(false);

@@ -245,9 +245,9 @@ const EachAlbum = () => {
                       initialValue={`<p>${postData.post_description}<p>`}
                       init={{
                         margin: 'auto',
-                        width: 790  ,
-                        padding: 10,
-                        height: 300,
+                        maxWidth: '100%'  ,
+                        // padding: 10,
+                        maxHeight: '100%',
                         menubar: false,
                         statusbar: false,
                         // width: 750,

@@ -63,17 +63,17 @@ const useStyles = makeStyles((theme: Theme) =>
         // maxWidth: "100%",
         // maxHeight: '100%'
 
-        width: 700,
-      height: 200,
+        maxWidth: "100%",
+        maxHeight: '100%'
       },
-      [theme.breakpoints.down(1171)]: {
-        // paddingLeft: 100
-        // maxWidth: "100%",
-        // maxHeight: '100%'
+      // [theme.breakpoints.down(1171)]: {
+      //   // paddingLeft: 100
+      //   // maxWidth: "100%",
+      //   // maxHeight: '100%'
 
-        width: 690,
-      height: 200,
-      }
+      //   width: 690,
+      // height: 200,
+      // }
       
     },
     picture: {  
@@ -184,11 +184,11 @@ export default function Feeds() {
                           src={picture}
                         />
                       </ButtonBase>
-                      <Modal open={open} onClose={handleClose}>
+                      {/* <Modal open={open} onClose={handleClose}>
 								<div className={classes.pictureContainer}>
 									<img className={classes.picture} alt='complex' src={picture} />
 								</div>
-							</Modal>
+							</Modal> */}
                       
                     </Grid>
                     <Grid item xs={12} sm container>
@@ -247,11 +247,11 @@ export default function Feeds() {
                           src={picture}
                         />
                       </ButtonBase>
-                      <Modal open={open} onClose={handleClose}>
+                      {/* <Modal open={open} onClose={handleClose}>
 								<div className={classes.pictureContainer}>
 									<img className={classes.picture} alt='complex' src={picture} />
 								</div>
-							</Modal>
+							</Modal> */}
                     </Grid>
                     <Grid item xs={12} sm container>
                       <Grid item xs container direction="column" spacing={2} className={classes.textContainer}>
