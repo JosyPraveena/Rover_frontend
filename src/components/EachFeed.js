@@ -18,11 +18,8 @@ import parse from "html-react-parser";
 import {Modal} from "@material-ui/core/Modal";
 import {useEndpoint} from '../Context/EndpointContext'
 import moment from 'moment'
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
-import 'antd/dist/antd.css';  
-import { Carousel } from 'antd';
-import Popup from "reactjs-popup";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -134,42 +131,20 @@ const EachFeed = () =>{
                             "MMMM Do YYYY, h:mm:ss a"
                           )}</Typography>
             <br/><br/>
-            <Grid container  className={classes.slider}>
-              <Grid item xs={6} justify='center'>
-
-              <GridList className={classes.gridList} cols={1.5}>
-              {data && data.images.map((each) => (
-                        // <GridListTile key={each.name} justify='center'>
-                          // <div style={{ maxWidth: "100%", maxHeight: "100%" }}>
-                         
-                          <img
-                    
+            {/* <Grid container  className={classes.slider}>
+              <Grid item xs={8} justify='center'> */}
+              <div className="carousel-container">
+                    <Carousel className='carousel-tag' showThumbs={false} showStatus={false} >
+                    { data && data.images.map((each) => (
+                        <img
                             src={`${roverEndpoint}${each.path}`}
                             alt={each.name}
-                            style={{ maxWidth: "100%", maxHeight: "100%", textAlign:'center' }}
                           />
-              ))}
-                          
-                </GridList>
-               {/* <AwesomeSlider id="slider">
-                     
-                      {data && data.images.map((each) => (
-                        // <GridListTile key={each.name} justify='center'>
-                          // <div style={{ maxWidth: "100%", maxHeight: "100%" }}>
-                          <div style={{ maxWidth: "100%", maxHeight: "100%" }}>
-                          <img
-                    
-                            src={`${roverEndpoint}${each.path}`}
-                            alt={each.name}
-                            style={{ maxWidth: "100%", maxHeight: "100%", textAlign:'center' }}
-                          />
-                          </div>
-
-                      ))}
-
-                       </AwesomeSlider> */}
-                       </Grid>
-                       </Grid>
+                    ))}
+                    </Carousel>
+                    </div>
+                       {/* </Grid>
+                       </Grid> */}
                           <br/><br/><br/>
                     <Typography variant='h6'align="justify" fontFamily='Dancing Scripts'>
                       {data && parse(data.post_description)}

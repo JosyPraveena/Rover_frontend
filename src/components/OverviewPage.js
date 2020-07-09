@@ -146,7 +146,9 @@ const {token} = useContext(MyContext)
 
 
   useEffect(() => {
+    console.log(token)
     if (token) {
+    
       var myHeaders = new Headers();
       myHeaders.append("authorization", "Bearer " + token);
   
@@ -271,7 +273,7 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                   />
-                  <Marker position={[52.45704149999999,13.5402645]}  openPopup>
+                  <Marker position={position}  openPopup>
                     <Popup>{road.road}</Popup>
                   </Marker>
                 </Map>

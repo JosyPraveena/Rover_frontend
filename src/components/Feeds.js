@@ -286,7 +286,7 @@ export default function Feeds() {
                    
                   </Grid>
                 </Paper>
-              ) : <div> {`Sorry! Experiences on ${searchContent} is not recorded yet`}</div>;
+              ) : null;
             })
           }
           </Grid>

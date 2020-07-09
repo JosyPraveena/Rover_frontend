@@ -19,6 +19,9 @@ import Modal from "@material-ui/core/Modal";
 import {useEndpoint} from '../Context/EndpointContext'
 import FadeIn from "react-fade-in";
 import { Editor } from "@tinymce/tinymce-react";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -184,17 +187,17 @@ const EachAlbum = () => {
       
                   <br />
                   {/* <EditIcon onClick={handleEdit} align='right'/> */}
-                  <div
-                    style={{
-                      display: "flex",
-                      // justifyContent: "center",
-                      alignItems: "center",
-                      // backgroundColor: "#f5f5f5"
-                
-                    }}
-                  >
+                  <div className="carousel-container">
+                    <Carousel className='carousel-tag' showThumbs={false} showStatus={false} >
+                    {postData && postData.images.map((each) => (
+                        <img
+                            src={`${roverEndpoint}${each.path}`}
+                            alt={each.name}
+                          />
+                    ))}
+                    </Carousel>
               
-                    <GridList
+                    {/* <GridList
                       className={classes.gridList}
                       cols={3}
                       elevation={6}
@@ -210,7 +213,7 @@ const EachAlbum = () => {
           
                         </GridListTile>
                       ))}
-                    </GridList>
+                    </GridList> */}
                   
                   </div>{" "}
                   <br /> <br />

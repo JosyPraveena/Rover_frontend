@@ -15,7 +15,7 @@ import EachFeed from './components/EachFeed'
 function App() {
 
 const roverEndpoint = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_ENDPOINT : process.env.REACT_APP_PROD_ENDPOINT
-
+console.log(roverEndpoint)
   const [postDescription, setPostDescription] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [searchContent, setSearchContent] = useState("");
@@ -34,8 +34,7 @@ const roverEndpoint = process.env.NODE_ENV === 'development' ? process.env.REACT
     <Route path={"/find-travel-buddies"} render={(props) => (<Travelbuddy {...props}/>)}/>
     <Route path={"/profile"} render={(props) => (<UserAlbum  {...props}/>)}/>
     <Route path={"/sign-up"} render={(props) => ( <Signup {...props}/>)}/>
-    <Route path={'/feeds'} render={(props) => (<Feeds {...props} />)}/>
-    
+    <Route path={'/feeds'} render={(props) => (<Feeds {...props} />)}/>    
     <Route path={"/"} render={(props) => ( <Home {...props} />)}/>
    
     </Switch>
