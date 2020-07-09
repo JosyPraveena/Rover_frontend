@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import {Redirect} from 'react-router-dom';
 import Navbar from '../components/Navbar'
 
+import {useEndpoint} from '../Context/EndpointContext'
+
 
 const Login = () =>{
   
@@ -10,8 +12,7 @@ const Login = () =>{
   const [password, setPassword] = useState("");
   
   const [authenticated,setAuthenticated] = useState(false)
-  const [toeknBackend,setTokenBackend] = useState("")
-
+  const roverEndpoint = useEndpoint()
   const loginSubmit = e => {
     e.preventDefault();
     const myHeaders = new Headers();
@@ -26,7 +27,7 @@ const Login = () =>{
       redirect: 'follow'
     };
     
-    fetch("http://localhost:3000/user/login", requestOptions)
+    fetch(`${roverEndpoint}/user/login`, requestOptions)
     .then(response => {
       if(response.status === 200){
         Cookies.set('token', response.headers.get('x-authorization-token'))
