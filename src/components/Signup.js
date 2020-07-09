@@ -30,11 +30,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     griditem: {
       justifyContent: "center",
-      width: 500,
-      height: 500,
+      maxWidth: '100%',
+      maxHeight: '100%',
       marginTop: "5vh",
-      // border: '1px solid red',
-      paddingLeft: 10,
+     
+      [theme.breakpoints.down('xs')]: {
+      justifyContent: "flex-start",
+      },
     },
   })
 );

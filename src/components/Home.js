@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       marginTop: '2vh',
       // padding:20
+      [theme.breakpoints.down(470)]: {
+        flexWrap: 'wrap'
+      },
     },
     ravor:{
       fontFamily: 'Dancing Script',
@@ -39,6 +42,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '15vh',
       maxWidth: '100%',
       maxHeight: 'auto',
+      [theme.breakpoints.down(470)]: {
+        marginTop: '5vh',
+        fontSize: '1rem'
+      },
     },
     modalcontainer:{
     //  border: '1px solid red',
