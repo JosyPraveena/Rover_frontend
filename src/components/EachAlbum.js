@@ -146,11 +146,11 @@ const EachAlbum = () => {
 
     fetch(`${roverEndpoint}/post/editpost/${id}`, requestOptions)
       .then((response) => response.text())
-      .then((result) => result)
+      .then(() => {
+        setEditFlag(false);
+        window.location.reload(false)
+      })
       .catch((error) => console.log("error", error));
-
-    setEditFlag(false);
-    window.location.reload(false)
   };
 
   // console.log(editFlag);
@@ -193,6 +193,7 @@ const EachAlbum = () => {
                         <img
                             src={`${roverEndpoint}${each.path}`}
                             alt={each.name}
+                            key={each.path}
                           />
                     ))}
                     </Carousel>

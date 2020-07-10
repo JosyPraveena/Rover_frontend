@@ -84,9 +84,9 @@ const Signup = () => {
         if (response.status === 204) {
           alert("Please fill all fields");
         }
-        // if (response.status === 400) {
-        //   alert("This id already exists");
-        // }
+        if (response.status === 400) {
+          alert("This id already exists");
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
