@@ -8,11 +8,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
-import { FaUserAlt, FaBinoculars, FaDoorOpen } from "react-icons/fa";
+import { FaUserAlt, FaBinoculars } from "react-icons/fa";
 import {FiLogOut} from 'react-icons/fi'
 import {IoIosPeople} from 'react-icons/io'
 import { MdAddLocation } from "react-icons/md";
-import { Link, useHistory,Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MyContext from '../Context/PostContext';
 import Cookies from 'js-cookie'
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     inputRoot: {
-      color: "inherit",
+      // color: "inherit",
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),

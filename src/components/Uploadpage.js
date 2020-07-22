@@ -314,7 +314,7 @@ const Uploadpage = ({ handleSubmit, road }) => {
       <br />
       <br />
       <Editor
-        apiKey="mkoaeakstug1m5gt3hpdotk40cnf5i678r19bxgls9hqqhgv"
+        apiKey={process.env.REACT_APP_TINYKEY}
         initialValue="<p>Write your experience...</p>"
         init={{
           height: 400,

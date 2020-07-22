@@ -26,6 +26,8 @@ import Chip from "@material-ui/core/Chip";
 import {MdTrain,MdDirectionsBus} from 'react-icons/md'
 import {GiSailboat} from 'react-icons/gi'
 import FadeIn from "react-fade-in";
+import {Alert, AlertTitle} from '@material-ui/lab';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
 
@@ -68,6 +70,15 @@ const useStyles = makeStyles((theme: Theme) =>
     chip: {
       margin: theme.spacing(1),
     },
+    alert:{
+      marginTop: '5vh',
+      fontSize: '20px',
+      display: 'flex',
+      justifyContent: 'baseline',
+      fontWeight: '600'
+      // maxWidth: '50vh',
+      // justify: 'center'
+    }
   })
 );
 const Travelbuddy = () => {
@@ -76,6 +87,13 @@ const Travelbuddy = () => {
     <>
       <Nav />
       <FadeIn>
+        <Grid container justify='center'>
+          <Grid item xs={3}>
+          <Alert className={classes.alert} severity="info" variant='filled'> <AlertTitle>Info</AlertTitle>
+          COMING SOON !!!!!</Alert>
+          </Grid>
+        </Grid>
+      
       <Typography variant="h3" className={classes.title} align="center">
         Find your travel group
       </Typography> <br/> <br/>
@@ -124,7 +142,7 @@ const Travelbuddy = () => {
               <Chip
                 className={classes.chip}
                 icon={<FcDepartment size={25} />}
-                label="Booked for 3 @Heritage Hotel"
+                label="Booked for 3 @Ellington Hotel"
               />
             </CardContent>
 

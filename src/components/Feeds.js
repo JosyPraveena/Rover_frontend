@@ -12,7 +12,6 @@ import Feedsnavbar from "../components/Feedsnavbar";
 import parse from "html-react-parser";
 import moment from "moment";
 import MyContext from "../Context/PostContext";
-import Modal from "@material-ui/core/Modal";
 import {useEndpoint} from '../Context/EndpointContext'
 import FadeIn from "react-fade-in";
 import {Link} from 'react-router-dom'
@@ -119,7 +118,7 @@ export default function Feeds() {
   const roverEndpoint = useEndpoint()
   const [data, setData] = useState(null);
 
- const { searchStatus, setSearchStatus,searchResults,setSearchResults,searchContent} = useContext(MyContext)
+ const {searchResults} = useContext(MyContext)
   const [open, setOpen] = useState(false);
 	const handleOpen = () => {
 		setOpen(true);
@@ -158,7 +157,7 @@ export default function Feeds() {
         <Grid container className={classes.root} justify='center' >
         
           <Grid item xs={8}>
-          <Typography variant='h2' color='black' className={classes.heading}>Escapades</Typography> 
+          <Typography variant='h2' className={classes.heading}>Escapades</Typography> 
           {searchResults && searchResults.length != null ? searchResults &&
             searchResults.map((each) => {
               let picture = "https://www.tellerreport.com/images/no-image.png";
@@ -197,7 +196,7 @@ export default function Feeds() {
                           <Typography className={classes.linktitle} gutterBottom variant="h6" component={Link} to={`/post/${each._id}`}>
                             {each.post_title}
                           </Typography>
-                          <Typography variant="body2" gutterBottom>
+                          <Typography variant="body2" gutterBottom component={'span'}>
                             {parse(each.post_description)}
                           </Typography>
                         </Grid>
