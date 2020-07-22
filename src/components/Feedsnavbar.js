@@ -18,7 +18,7 @@ import Grid from "@material-ui/core/Grid";
 import { FaUserAlt, FaBinoculars } from "react-icons/fa";
 import {FiLogOut} from "react-icons/fi";
 import { MdAddLocation } from "react-icons/md";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {IoIosPeople} from 'react-icons/io'
 import MyContext from "../Context/PostContext";
 import {useEndpoint} from '../Context/EndpointContext'
@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "center",
     },
-    inputRoot: {
-      color: "inherit",
-    },
+      inputRoot: {
+        color: "primary",
+      },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -103,11 +103,11 @@ const Feedsnavbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const {token} = useContext(MyContext)
-  const { searchContent, setSearchContent,searchResults,setSearchResults,searchStatus, setSearchStatus} = useContext(MyContext)
+  const { searchContent, setSearchContent,setSearchResults} = useContext(MyContext)
   const roverEndpoint = useEndpoint()
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const history = useHistory();
+  // const history = useHistory();
  
   useEffect(()=>{
     if(!searchContent.length)
@@ -211,7 +211,7 @@ const Feedsnavbar = () => {
       <div className={classes.grow}>
         <AppBar position="static" className={classes.nav}>
           <Toolbar>
-            <Typography className={classes.title} noWrap variant="h4"
+            <Typography className={classes.title} noWrap variant="h4" 
             component={Link}
             to="/profile">
               Rover
@@ -222,7 +222,8 @@ const Feedsnavbar = () => {
               </div>
               <form onSubmit={searchSubmit}>
               <InputBase 
-                color="inherit"
+              
+                // color="inherit"
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,

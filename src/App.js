@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
-import {Switch,Route,Link} from "react-router-dom"
+
+import {Switch,Route} from "react-router-dom"
 import './App.css';
 import Signup from './components/Signup'
 import Home from'./components/Home'
@@ -15,7 +16,7 @@ import EachFeed from './components/EachFeed'
 function App() {
 
 const roverEndpoint = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_ENDPOINT : process.env.REACT_APP_PROD_ENDPOINT
-console.log(roverEndpoint)
+
   const [postDescription, setPostDescription] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [searchContent, setSearchContent] = useState("");

@@ -17,6 +17,7 @@ bower_components
 psd
 thumb
 sketch
-# Ignore files related to API keys
+
 .env
+
 # End of https://www.toptal.com/developers/gitignore/api/react
