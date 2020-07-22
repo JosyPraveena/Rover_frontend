@@ -6,7 +6,16 @@ import Typography from "@material-ui/core/Typography";
 // import Paper from "@material-ui/core/Paper";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
+// import CardMedia from "@material-ui/core/CardMedia";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+// import EditIcon from '@material-ui/icons/Edit';
+// import Button from "@material-ui/core/Button";
+// import MyContext from "../Context/PostContext";
+import Cookies from "js-cookie";
 import parse from "html-react-parser";
+import {Modal} from "@material-ui/core/Modal";
 import {useEndpoint} from '../Context/EndpointContext'
 import moment from 'moment'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -72,6 +81,13 @@ const EachFeed = () =>{
     const { id } = useParams();
     const [data,setData] = useState(null)
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     useEffect(() => {
       async function fetchData() {
